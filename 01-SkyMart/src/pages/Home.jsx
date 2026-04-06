@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import HeroSection from "../components/HeroSection";
+import StartsCard from "../components/StartsCard";
 
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <div className="p-8">
+      <HeroSection />
+      <StartsCard />
+      <StartsCard />
+      <StartsCard />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

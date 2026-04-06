@@ -6,6 +6,11 @@ import About from "../pages/About";
 import Register from "../pages/Register";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Login";
+import AuthProtctedRoutes from "./AuthProtectedRoutes";
+import DashboardProtectedRoutes from "./DashboardProtectedRoutes";
+import AuthProtectedRoutes from "./AuthProtectedRoutes";
+import { getAllProducts } from "../api/ProductsApi";
+import ProductDetails from "../pages/productDetails";
 
 const AppRoutes = () => {
   let router = createBrowserRouter([
@@ -15,39 +20,65 @@ const AppRoutes = () => {
     },
     {
       path: "/",
-      element: <MainLayout />,
+      element: <DashboardProtectedRoutes />,
       children: [
         {
-          path: "",
-          element: <Home />,
-        },
-        {
-          path: "shop",
-          element: <Shop />,
-        },
-        {
-          path: "about",
-          element: <About />,
+          element: <MainLayout />,
+          children: [
+            {
+              index: true,
+              path: "home",
+              element: <Home />,
+            },
+            {
+              path: "shop",
+              loader: async () => {
+                return await getAllProducts();
+              },
+              hydrateFallbackElement: (
+                <h1 className="text-2xl font-bold">Loading products...</h1>
+              ),
+              element: <Shop />,
+            },
+            {
+              path: "about",
+              element: <About />,
+            },
+            {
+              path: "/shop/product/details/:id",
+              element: <ProductDetails />,
+            },
+          ],
         },
       ],
     },
     {
       path: "/register",
-      element: <AuthLayout />,
+      element: <AuthProtectedRoutes />,
       children: [
         {
-          index: true,
-          element: <Register />,
+          element: <AuthLayout />,
+          children: [
+            {
+              index: true,
+              element: <Register />,
+            },
+          ],
         },
       ],
     },
     {
       path: "/login",
-      element: <AuthLayout />,
+      element: <AuthProtctedRoutes />,
       children: [
         {
-          index: true,
-          element: <Login />,
+          element: <AuthLayout />,
+          children: [
+            {
+              index: true,
+              element: <Login />,
+            },
+          ],
         },
       ],
     },

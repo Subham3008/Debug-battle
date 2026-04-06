@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router";
+import { useMyContext } from "../context/AppContext";
 
 const Navbar = () => {
+  const { loggedUser, setLoggedUser } = useMyContext();
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
+    <div
+      className={`max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6 sticky top-0 z-20 ${
+        scrolled
+          ? "border-b border-white/60 bg-[#0d0d0d]/80 backdrop-blur"
+          : "border-b border-transparent"
+      }`}
+    >
       {/* Logo */}
       <a className="flex items-center gap-2 shrink-0 active" href="/home">
         <div className="w-8 h-8 bg-volt rounded-xl flex items-center justify-center bg-[#C8F400]">
@@ -30,7 +46,7 @@ const Navbar = () => {
       <nav className="hidden md:flex items-center gap-6">
         <NavLink
           className={({ isActive }) => (isActive ? "text-[#C8F400]" : "")}
-          to="/"
+          to="/home"
         >
           Home
         </NavLink>
@@ -52,11 +68,11 @@ const Navbar = () => {
       <div className="flex items-center gap-2 shrink-0">
         {/* User Info */}
         <div className="hidden sm:flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
-          <div className="w-6 h-6 bg-volt rounded-lg flex items-center justify-center text-ink text-xs font-bold">
+          <div className="w-6 h-6 bg-volt rounded-lg flex items-center justify-center text-black text-xs font-bold bg-[#C8F400]">
             S
           </div>
           <span className="text-sm text-white/70 font-body max-w-25 truncate">
-            Subham Samanta
+            {loggedUser.name}
           </span>
         </div>
 
@@ -82,6 +98,10 @@ const Navbar = () => {
 
         {/* Logout Button */}
         <button
+          onClick={() => {
+            localStorage.removeItem("loggedUser");
+            setLoggedUser(null);
+          }}
           title="Logout"
           className="p-2.5 bg-white/8 hover:bg-red-500/20 hover:border-red-500/30 border border-white/10 rounded-xl transition-all text-white/60 hover:text-red-400"
         >
