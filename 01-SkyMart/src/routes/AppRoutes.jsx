@@ -10,7 +10,7 @@ import AuthProtctedRoutes from "./AuthProtectedRoutes";
 import DashboardProtectedRoutes from "./DashboardProtectedRoutes";
 import AuthProtectedRoutes from "./AuthProtectedRoutes";
 import { getAllProducts } from "../api/ProductsApi";
-import ProductDetails from "../pages/productDetails";
+import ProductDetails from "../pages/ProductDetails";
 
 const AppRoutes = () => {
   let router = createBrowserRouter([
@@ -23,7 +23,7 @@ const AppRoutes = () => {
       element: <DashboardProtectedRoutes />,
       children: [
         {
-          id:"root",
+          id: "root",
           element: <MainLayout />,
           loader: async () => {
             return await getAllProducts();
