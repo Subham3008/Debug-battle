@@ -1,12 +1,12 @@
+import { useRouteLoaderData } from "react-router";
 import FilterBar from "../components/filterBar";
 import ProductCard from "../components/ProductCard";
-import { useLoaderData } from "react-router";
 
 const Shop = () => {
-  let products = useLoaderData();
+  let products = useRouteLoaderData("root");
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="">
       <div className="mb-8">
         <h1 className="font-bold text-3xl sm:text-4xl mb-2 text-white">
           All Products

@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+// import { getAllProductCategory } from "../api/ProductCategoryApi";
 
 let MyContext = createContext();
 
@@ -54,6 +55,29 @@ export let ContextProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  //get all category
+  // const [productCategory, setProductCategory] = useState([]);
+  // const fetchCategory = async () => {
+  //   await new Promise((res) => setTimeout(res, 500)); // optional delay
+  //   const data = await getAllProductCategory(); // cached API call
+  //   return data;
+  // };
+
+  // useEffect(() => {
+  //   const getCategories = async () => {
+  //     try {
+  //       const data = await fetchCategory();
+  //       setProductCategory(data);
+  //     } catch (error) {
+  //       console.log("Category fetch error:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   getCategories();
+  // }, []);
+
   return (
     <MyContext.Provider
       value={{
@@ -66,6 +90,8 @@ export let ContextProvider = ({ children }) => {
         show,
         setShow,
         statsData,
+        // productCategory,
+        // setProductCategory,
       }}
     >
       {children}

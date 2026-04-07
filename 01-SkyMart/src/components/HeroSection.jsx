@@ -46,7 +46,7 @@ const HeroSection = () => {
             </a>
 
             <a
-              href="/products"
+              href="/shop"
               className="flex items-center gap-2 border border-white/10 text-white px-5 py-2.5 rounded-lg hover:border-white/60 transition"
             >
               View All Products

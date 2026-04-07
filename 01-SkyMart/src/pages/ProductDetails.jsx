@@ -4,14 +4,26 @@ import axios from "axios";
 
 const ProductDetails = () => {
   const [singleProduct, setSingleProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { id } = useParams();
 
   const getSingleProduct = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
-      const res = await axios.get(`https://dummyjson.com/products/${id}`);
+      const res = await axios.get(`/api/products/${id}`); // proxy call
       setSingleProduct(res.data);
-    } catch (error) {
-      console.log("Api fetched error form single product -->", error);
+    } catch (err) {
+      console.error("Api fetched error form single product -->", err);
+      setError(
+        err.response?.status === 429
+          ? "Too many requests. Please try after some seconds."
+          : "Failed to fetch product data.",
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -19,11 +31,21 @@ const ProductDetails = () => {
     if (id) getSingleProduct();
   }, [id]);
 
-  if (!singleProduct) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="rounded-2xl bg-white px-6 py-4 shadow-md text-gray-600">
           Loading product details...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="rounded-2xl bg-red-50 px-6 py-4 shadow-md text-red-600">
+          {error}
         </div>
       </div>
     );
@@ -49,10 +71,8 @@ const ProductDetails = () => {
         >
           ← Products
         </Link>
-
         <span>/</span>
         <span className="capitalize text-white/50">{category}</span>
-
         <span>/</span>
         <span className="text-white/70 clamp-1 max-w-50">{title}</span>
       </nav>
@@ -69,18 +89,13 @@ const ProductDetails = () => {
 
         {/* Content */}
         <div className="flex flex-col gap-5">
-          {/* Category */}
           <span className="bg-[#C8F400]/10 text-[#C8F400] border border-[#C8F400]/20 capitalize w-fit text-xs px-3 py-1 rounded-full">
             {category}
           </span>
 
-          {/* Title */}
           <h1 className="font-bold text-2xl sm:text-3xl text-white leading-tight">
             {title}
           </h1>
-
-          {/* Brand */}
-          {/* <p className="text-white/40 text-sm">Brand: {brand}</p> */}
 
           {/* Rating */}
           <div className="flex items-center gap-3">
@@ -96,7 +111,6 @@ const ProductDetails = () => {
                 </span>
               ))}
             </div>
-
             <span className="text-white/70 text-sm font-semibold">
               {rating}
             </span>
@@ -105,18 +119,12 @@ const ProductDetails = () => {
           {/* Price */}
           <div className="py-4 border-y border-white/50">
             <span className="font-bold text-4xl text-[#C8F400]">${price}</span>
-
             {discountPercentage > 0 && (
               <span className="ml-3 text-sm text-red-400">
                 {Math.round(discountPercentage)}% OFF
               </span>
             )}
           </div>
-
-          {/* Stock */}
-          {/* <p className="text-white/30 text-sm">
-            {stock > 0 ? "In Stock" : "Out of Stock"}
-          </p> */}
 
           {/* Description */}
           <p className="text-white/50 text-sm leading-relaxed">{description}</p>
@@ -126,13 +134,12 @@ const ProductDetails = () => {
             <button className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base transition-all duration-200 active:scale-95 bg-[#C8F400] text-black hover:opacity-90">
               🛒 Add to Cart
             </button>
-
             <button className="p-3.5 border rounded-2xl transition-all border-white/10 text-white/30 hover:text-red-400 hover:border-red-500/30">
               ❤️
             </button>
           </div>
 
-          {/* Features (UNCHANGED UI) */}
+          {/* Features */}
           <div className="grid grid-cols-3 gap-3 mt-1">
             <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
               <p className="text-[#C8F400] mb-1">🚚</p>
@@ -141,7 +148,6 @@ const ProductDetails = () => {
               </p>
               <p className="text-white/25 text-[10px]">On orders $50+</p>
             </div>
-
             <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
               <p className="text-[#C8F400] mb-1">🔒</p>
               <p className="text-white/60 text-[11px] font-semibold">
@@ -149,7 +155,6 @@ const ProductDetails = () => {
               </p>
               <p className="text-white/25 text-[10px]">256-bit SSL</p>
             </div>
-
             <div className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
               <p className="text-[#C8F400] mb-1">🔄</p>
               <p className="text-white/60 text-[11px] font-semibold">
@@ -159,7 +164,7 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* Navigation (DYNAMIC FIX) */}
+          {/* Navigation */}
           <div className="flex gap-3 mt-6">
             <Link
               to={`/products/${Number(id) - 1}`}
@@ -167,7 +172,6 @@ const ProductDetails = () => {
             >
               ← Previous
             </Link>
-
             <Link
               to={`/products/${Number(id) + 1}`}
               className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#C8F400] hover:opacity-90 text-black border border-[#C8F400] rounded-2xl transition text-sm font-semibold"

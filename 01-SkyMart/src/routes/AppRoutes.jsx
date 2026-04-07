@@ -23,7 +23,14 @@ const AppRoutes = () => {
       element: <DashboardProtectedRoutes />,
       children: [
         {
+          id:"root",
           element: <MainLayout />,
+          loader: async () => {
+            return await getAllProducts();
+          },
+          hydrateFallbackElement: (
+            <h1 className="text-2xl font-bold">Loading products...</h1>
+          ),
           children: [
             {
               index: true,
@@ -32,12 +39,6 @@ const AppRoutes = () => {
             },
             {
               path: "shop",
-              loader: async () => {
-                return await getAllProducts();
-              },
-              hydrateFallbackElement: (
-                <h1 className="text-2xl font-bold">Loading products...</h1>
-              ),
               element: <Shop />,
             },
             {

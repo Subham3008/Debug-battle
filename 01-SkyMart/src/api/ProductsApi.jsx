@@ -1,4 +1,4 @@
-import axios from "axios";
+import { AxiosInstance } from "../config/AxioInstance";
 
 let cacheData = null;
 
@@ -7,10 +7,11 @@ export let getAllProducts = async () => {
     return cacheData;
   }
   try {
-    let res = await axios.get(`https://dummyjson.com/products`);
+    let res = await AxiosInstance.get(`/products`);
     cacheData = res.data.products;
     return res.data.products;
   } catch (error) {
-    console.log("Api fetched error -->", error);
+    console.log("Api fetched error from productApi -->", error);
+    return [];
   }
 };
