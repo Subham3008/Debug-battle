@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { useMyContext } from "../context/AppContext";
 
-const Navbar = () => {
+const Navbar = ({ setOpenCart }) => {
   const { loggedUser, setLoggedUser } = useMyContext();
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6 sticky top-0 z-20">
@@ -62,7 +62,10 @@ const Navbar = () => {
         </div>
 
         {/* Cart Button */}
-        <button className="relative p-2.5 bg-white/8 hover:bg-white/12 border border-white/10 rounded-xl transition-all">
+        <button
+          onClick={() => setOpenCart(true)}
+          className="relative p-2.5 bg-white/8 hover:bg-white/12 border border-white/10 rounded-xl transition-all"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"

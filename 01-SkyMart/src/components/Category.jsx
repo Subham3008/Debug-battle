@@ -10,7 +10,7 @@ const Category = ({ categoryData }) => {
     >
       {/* Icon */}
       <div className="mb-4 flex justify-center">
-        <div className="w-25 h-20 flex items-center justify-center rounded-2xl bg-[#C8F400]/50 group-hover:bg-[#C8F400]/20 transition">
+        <div className="w-25 h-20 flex items-center justify-center rounded-2xl bg-[#C8F400]/50 group-hover:bg-[#C8F400]/20 transition border">
           <img
             src={categoryData.image}
             alt={categoryData.category}
@@ -20,7 +20,7 @@ const Category = ({ categoryData }) => {
       </div>
 
       {/* Title */}
-      <p className="font-semibold text-sm capitalize text-gray-800 group-hover:text-black transition">
+      <p className="font-semibold text-sm capitalize text-gray-800 group-hover:text-black transition underline">
         {categoryData.category}
       </p>
 

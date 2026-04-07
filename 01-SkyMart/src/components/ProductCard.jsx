@@ -1,8 +1,10 @@
+import { useMyContext } from "@/context/AppContext";
 import { ShoppingCart } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router";
 
 const ProductCard = ({ product }) => {
+  const { addToCart, setOpenCart } = useMyContext();
   const navigate = useNavigate();
   const {
     id,
@@ -17,12 +19,12 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div
-      onClick={() => navigate(`/shop/product/details/${id}`)}
-      className="flex flex-col group bg-[#111] rounded-3xl overflow-hidden border border-white/20 cursor-pointer transition-all duration-500 hover:border-[#86a401]"
-    >
+    <div className="flex flex-col group bg-[#111] rounded-3xl overflow-hidden border border-white/20 cursor-pointer transition-all duration-500 hover:border-[#86a401]">
       {/* Image */}
-      <div className="relative aspect-square bg-white overflow-hidden">
+      <div
+        onClick={() => navigate(`/shop/product/details/${id}`)}
+        className="relative aspect-square bg-white overflow-hidden"
+      >
         <img
           src={thumbnail}
           alt={title}
@@ -81,6 +83,10 @@ const ProductCard = ({ product }) => {
           </div>
 
           <button
+            onClick={() => {
+              addToCart(product);
+              setOpenCart(true);
+            }}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold
             transition-all duration-200 active:scale-95
             bg-[#C8F400] text-black hover:opacity-90"

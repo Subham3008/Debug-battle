@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { Outlet, useLoaderData } from "react-router";
+import { Outlet } from "react-router";
 import Footer from "../components/Footer";
 import Aside from "../components/Aside";
+import { useMyContext } from "@/context/AppContext";
 
 const MainLayout = () => {
-  const product = useLoaderData();
+  const { openCart, setOpenCart } = useMyContext();
 
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -18,7 +19,7 @@ const MainLayout = () => {
   return (
     <div className="min-h-screen bg-[#0d0d0d] text-white">
       <aside>
-        <Aside />
+        <Aside openCart={openCart} setOpenCart={setOpenCart} />
       </aside>
       <div
         className={`sticky top-0 z-30 transition-all duration-300 bg-[#0d0d0d]/90 backdrop-blur-xl ${
@@ -27,7 +28,7 @@ const MainLayout = () => {
             : "border-b border-transparent"
         }`}
       >
-        <Navbar />
+        <Navbar setOpenCart={setOpenCart} />
       </div>
       <main>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

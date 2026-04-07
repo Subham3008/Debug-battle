@@ -55,28 +55,40 @@ export let ContextProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  //get all category
-  // const [productCategory, setProductCategory] = useState([]);
-  // const fetchCategory = async () => {
-  //   await new Promise((res) => setTimeout(res, 500)); // optional delay
-  //   const data = await getAllProductCategory(); // cached API call
-  //   return data;
-  // };
+  //Add to cart related logic--->
+  const [openCart, setOpenCart] = useState(false);
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart_product")) || [],
+  );
+  const [count, setCount] = useState(0);
 
-  // useEffect(() => {
-  //   const getCategories = async () => {
-  //     try {
-  //       const data = await fetchCategory();
-  //       setProductCategory(data);
-  //     } catch (error) {
-  //       console.log("Category fetch error:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  const addToCart = (product) => {
+    const cartProduct = [...cart, product];
+    localStorage.setItem("cart_product", JSON.stringify(cartProduct));
+    setCart(cartProduct);
+    console.log(cart);
 
-  //   getCategories();
-  // }, []);
+    if (cartProduct) {
+      setCount(count + 1);
+    }
+  };
+
+  //Delete from cart page
+  const handleDelete = (id) => {
+    const updatedCart = cart.filter((elem) => {
+      return elem.id !== id;
+    });
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+  useEffect(() => {
+    const cartItem = localStorage.getItem("cart_product");
+    if (cartItem) {
+      setCart(JSON.parse(cartItem));
+    }
+    setLoading(false);
+  }, []);
 
   return (
     <MyContext.Provider
@@ -90,8 +102,14 @@ export let ContextProvider = ({ children }) => {
         show,
         setShow,
         statsData,
-        // productCategory,
-        // setProductCategory,
+        openCart,
+        setOpenCart,
+        addToCart,
+        cart,
+        setCart,
+        count,
+        setCount,
+        handleDelete,
       }}
     >
       {children}
