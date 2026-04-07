@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router";
-import FilterBar from "../components/filterBar";
+import FilterBar from "../components/FilterBar";
 import ProductCard from "../components/ProductCard";
 
 const Shop = () => {
