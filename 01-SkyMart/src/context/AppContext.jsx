@@ -60,18 +60,47 @@ export let ContextProvider = ({ children }) => {
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart_product")) || [],
   );
-  const [count, setCount] = useState(0);
+
   const addToCart = (product) => {
-    const cartProduct = [...cart, product];
+    const exists = cart.some((item) => item.id === product.id);
+    if (exists) {
+      incrementCountity(product);
+      return;
+    }
+    const cartProduct = [...cart, { ...product, quentity: 1 }];
     localStorage.setItem("cart_product", JSON.stringify(cartProduct));
     setCart(cartProduct);
-    console.log(cart);
-
-    // if (cartProduct) {
-    //   setCount(count + 1);
-    // }
   };
+
+  //Increment & decrement
+
+  const incrementCountity = (product) => {
+    const updatedCart = cart.map((item) => {
+      if (item.id === product.id) {
+        return { ...item, quentity: item.quentity + 1 };
+      }
+      return item;
+    });
+    setCart(updatedCart);
+    localStorage.setItem("cart_product", JSON.stringify(updatedCart));
+  };
+
+  const decrementCountity = (product) => {
+    const updatedCart = cart
+      .map((item) => {
+        if (item.id === product.id) {
+          return { ...item, quentity: item.quentity - 1 };
+        }
+        return item;
+      })
+      .filter((item) => item.quentity > 0);
+
+    setCart(updatedCart);
+    localStorage.setItem("cart_product", JSON.stringify(updatedCart));
+  };
+
   //Add button Add to Added
+
   const isInCart = (id) => {
     return cart.some((elem) => elem.id === id);
   };
@@ -110,8 +139,8 @@ export let ContextProvider = ({ children }) => {
         addToCart,
         cart,
         setCart,
-        count,
-        setCount,
+        incrementCountity,
+        decrementCountity,
         handleDelete,
         isInCart,
       }}

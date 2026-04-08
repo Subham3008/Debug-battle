@@ -25,7 +25,7 @@ const Aside = ({ openCart, setOpenCart }) => {
         side="right"
         className="bg-[#111] text-white [&>button]:hidden"
       >
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/8">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/60">
           <div className="flex items-center gap-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ const Aside = ({ openCart, setOpenCart }) => {
             </svg>
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3">
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-3 custom-scroll">
           {cart.length > 0 ? (
             cart.map((elem) => {
               return <CartCard key={elem.id} cartProduct={elem} />;

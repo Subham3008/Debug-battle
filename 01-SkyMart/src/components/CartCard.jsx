@@ -2,7 +2,7 @@ import { useMyContext } from "@/context/AppContext";
 import React from "react";
 
 const CartCard = ({ cartProduct }) => {
-  const { handleDelete } = useMyContext();
+  const { handleDelete, incrementCountity, decrementCountity } = useMyContext();
   return (
     <div className="flex gap-4 p-3 bg-white/4 border border-white/50 rounded-2xl animate-fade-in">
       <div className="w-18 h-18 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-2">
@@ -26,7 +26,10 @@ const CartCard = ({ cartProduct }) => {
 
         <div className="flex items-center gap-2 mt-2">
           {/* Minus */}
-          <button className="w-7 h-7 flex items-center justify-center bg-white/8 hover:bg-white/15 rounded-lg transition-colors border border-white/10">
+          <button
+            onClick={() => decrementCountity(cartProduct)}
+            className="w-7 h-7 flex items-center justify-center bg-white/8 hover:bg-white/15 rounded-lg transition-colors border border-white/10 cursor-pointer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="11"
@@ -42,10 +45,15 @@ const CartCard = ({ cartProduct }) => {
             </svg>
           </button>
 
-          <span className="text-sm font-bold font-body w-5 text-center">1</span>
+          <span className="text-sm font-bold font-body w-5 text-center">
+            {cartProduct.quentity}
+          </span>
 
           {/* Plus */}
-          <button className="w-7 h-7 flex items-center justify-center bg-white/8 hover:bg-white/15 rounded-lg transition-colors border border-white/10">
+          <button
+            onClick={() => incrementCountity(cartProduct)}
+            className="w-7 h-7 flex items-center justify-center bg-white/8 hover:bg-white/15 rounded-lg transition-colors border border-white/10 cursor-pointer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="11"
@@ -65,7 +73,7 @@ const CartCard = ({ cartProduct }) => {
           {/* Delete */}
           <button
             onClick={() => handleDelete(cartProduct.id)}
-            className="ml-auto text-red-400/60 hover:text-red-400 transition-colors"
+            className="ml-auto text-red-400/60 hover:text-red-400 transition-colors cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

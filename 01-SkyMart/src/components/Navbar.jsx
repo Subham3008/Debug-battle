@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import { useMyContext } from "../context/AppContext";
 
 const Navbar = ({ setOpenCart }) => {
-  const { loggedUser, setLoggedUser } = useMyContext();
+  const { loggedUser, setLoggedUser, cart } = useMyContext();
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6 sticky top-0 z-20">
       {/* Logo */}
@@ -64,7 +64,7 @@ const Navbar = ({ setOpenCart }) => {
         {/* Cart Button */}
         <button
           onClick={() => setOpenCart(true)}
-          className="relative p-2.5 bg-white/8 hover:bg-white/12 border border-white/10 rounded-xl transition-all"
+          className="relative p-2.5 bg-white/8 hover:bg-white/12 border border-white/10 rounded-xl transition-all cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,6 +82,13 @@ const Navbar = ({ setOpenCart }) => {
             <circle cx="19" cy="21" r="1" />
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
           </svg>
+          {cart.length > 0 ? (
+            <span className="flex absolute -top-2 -right-2 bg-[#C8F400] px-2 py-1 rounded-full text-[10px] text-black font-medium">
+              {cart.length}
+            </span>
+          ) : (
+            ""
+          )}
         </button>
 
         {/* Logout Button */}
