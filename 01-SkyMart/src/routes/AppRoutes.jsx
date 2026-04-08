@@ -46,7 +46,7 @@ const AppRoutes = () => {
               element: <About />,
             },
             {
-              path: "/shop/product/details/:id",
+              path: "shop/product/details/:id",
               element: <ProductDetails />,
             },
           ],
