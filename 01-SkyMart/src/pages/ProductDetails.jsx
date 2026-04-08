@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import axios from "axios";
+import { AxiosInstance } from "@/config/AxioInstance";
+import { useMyContext } from "@/context/AppContext";
 
 const ProductDetails = () => {
+  const { addToCart } = useMyContext();
   const [singleProduct, setSingleProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +16,7 @@ const ProductDetails = () => {
     setError(null);
 
     try {
-      const res = await axios.get(`/api/products/${id}`); // proxy call
+      const res = await AxiosInstance.get(`/products/${id}`); // proxy call
       setSingleProduct(res.data);
     } catch (err) {
       console.error("Api fetched error form single product -->", err);
@@ -131,7 +134,10 @@ const ProductDetails = () => {
 
           {/* Buttons */}
           <div className="flex gap-3">
-            <button className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base transition-all duration-200 active:scale-95 bg-[#C8F400] text-black hover:opacity-90">
+            <button
+              onClick={() => addToCart(singleProduct)}
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold text-base transition-all duration-200 active:scale-95 bg-[#C8F400] text-black hover:opacity-90 cursor-pointer"
+            >
               🛒 Add to Cart
             </button>
             <button className="p-3.5 border rounded-2xl transition-all border-white/10 text-white/30 hover:text-red-400 hover:border-red-500/30">
