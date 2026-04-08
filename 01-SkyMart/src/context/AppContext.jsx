@@ -78,8 +78,8 @@ export let ContextProvider = ({ children }) => {
     const updatedCart = cart.filter((elem) => {
       return elem.id !== id;
     });
+    localStorage.setItem("cart_product", JSON.stringify(updatedCart));
     setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   useEffect(() => {

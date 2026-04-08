@@ -2,9 +2,11 @@ import { useMyContext } from "@/context/AppContext";
 import React from "react";
 
 const CartCard = ({ cartProduct }) => {
+  console.log(cartProduct);
+
   const { handleDelete } = useMyContext();
   return (
-    <div className="flex gap-4 p-3 bg-white/4 border border-white/8 rounded-2xl animate-fade-in">
+    <div className="flex gap-4 p-3 bg-white/4 border border-white/50 rounded-2xl animate-fade-in">
       <div className="w-18 h-18 bg-white rounded-xl overflow-hidden shrink-0 flex items-center justify-center p-2">
         <img
           src={cartProduct.thumbnail}
@@ -15,11 +17,11 @@ const CartCard = ({ cartProduct }) => {
 
       <div className="flex-1 min-w-0">
         <p className="text-sm text-white/80 font-body clamp-2 leading-snug">
-          {cartProduct.category}
+          {cartProduct.title}
         </p>
 
         <p className="text-volt font-heading font-bold text-base mt-1">
-          ${cartProduct.price}
+          ${Math.floor(cartProduct.price)}
         </p>
 
         <p className="text-white/30 text-xs">${cartProduct.price} each</p>

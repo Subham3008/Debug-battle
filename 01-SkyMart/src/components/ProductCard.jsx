@@ -74,7 +74,9 @@ const ProductCard = ({ product }) => {
         {/* Price + Button */}
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/10">
           <div className="flex flex-col">
-            <span className="font-bold text-[#C8F400] text-lg">${price}</span>
+            <span className="font-bold text-[#C8F400] text-lg">
+              ${Math.floor(price)}
+            </span>
 
             {/* Stock */}
             <span className="text-[10px] text-white/40">
