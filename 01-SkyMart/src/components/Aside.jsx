@@ -8,8 +8,6 @@ const Aside = ({ openCart, setOpenCart }) => {
   const { cart, setCart } = useMyContext();
   const navigate = useNavigate();
 
-  console.log("from aside-->", cart);
-
   const [total, setTotal] = useState(0);
   useEffect(() => {
     if (cart) {

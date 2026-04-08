@@ -61,16 +61,19 @@ export let ContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("cart_product")) || [],
   );
   const [count, setCount] = useState(0);
-
   const addToCart = (product) => {
     const cartProduct = [...cart, product];
     localStorage.setItem("cart_product", JSON.stringify(cartProduct));
     setCart(cartProduct);
     console.log(cart);
 
-    if (cartProduct) {
-      setCount(count + 1);
-    }
+    // if (cartProduct) {
+    //   setCount(count + 1);
+    // }
+  };
+  //Add button Add to Added
+  const isInCart = (id) => {
+    return cart.some((elem) => elem.id === id);
   };
 
   //Delete from cart page
@@ -110,6 +113,7 @@ export let ContextProvider = ({ children }) => {
         count,
         setCount,
         handleDelete,
+        isInCart,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 
 const ProductCard = ({ product }) => {
-  const { addToCart, setOpenCart } = useMyContext();
+  const { addToCart, setOpenCart, isInCart } = useMyContext();
   const navigate = useNavigate();
   const {
     id,
@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div className="flex flex-col group bg-[#111] rounded-3xl overflow-hidden border border-white/20 cursor-pointer transition-all duration-500 hover:border-[#86a401]">
+    <div className="flex flex-col group bg-[#111] rounded-3xl overflow-hidden border border-white/20  transition-all duration-500 hover:border-[#86a401]">
       {/* Image */}
       <div
         onClick={() => navigate(`/shop/product/details/${id}`)}
@@ -29,7 +29,7 @@ const ProductCard = ({ product }) => {
           src={thumbnail}
           alt={title}
           loading="lazy"
-          className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-500 cursor-pointer"
         />
 
         <span className="absolute top-3 left-3 bg-black/60 text-white/80 backdrop-blur-sm capitalize text-[10px] px-2 py-1 rounded-full">
@@ -89,11 +89,15 @@ const ProductCard = ({ product }) => {
               addToCart(product);
               setOpenCart(true);
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold
-            transition-all duration-200 active:scale-95
-            bg-[#C8F400] text-black hover:opacity-90"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 active:scale-95 cursor-pointer
+              ${
+                isInCart(product.id)
+                  ? "bg-green-500 text-white"
+                  : "bg-[#C8F400] text-black hover:opacity-90"
+              }`}
           >
-            <ShoppingCart size={"15px"} /> Add
+            <ShoppingCart size={"15px"} />{" "}
+            {isInCart(product.id) ? "Added" : "Add"}
           </button>
         </div>
       </div>

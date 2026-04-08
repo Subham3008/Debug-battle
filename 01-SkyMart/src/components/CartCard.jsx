@@ -2,8 +2,6 @@ import { useMyContext } from "@/context/AppContext";
 import React from "react";
 
 const CartCard = ({ cartProduct }) => {
-  console.log(cartProduct);
-
   const { handleDelete } = useMyContext();
   return (
     <div className="flex gap-4 p-3 bg-white/4 border border-white/50 rounded-2xl animate-fade-in">
