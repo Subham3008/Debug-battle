@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import BlogForm from "../components/BlogForm";
 
 const Create = () => {
   return (
-    <div>
-      Create
-    </div>
-  )
-}
+    <main className="mx-auto max-w-4xl px-4 py-8">
+      <BlogForm />
+    </main>
+  );
+};
 
-export default Create
+export default Create;

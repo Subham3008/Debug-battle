@@ -8,16 +8,10 @@ export const ContextProvider = ({ children }) => {
   );
 
   const [loggedUser, setLoggedUser] = useState(
-    JSON.parse(localStorage.getItem("blog_current_user")) || [],
+    JSON.parse(localStorage.getItem("blog_current_user")) || null,
   );
 
-  /*--Sync from local storage---- */
-  useEffect(() => {
-    const data = localStorage.getItem("blog_current_user");
-    if (data) {
-      setLoggedUser(JSON.parse(data));
-    }
-  }, []);
+ 
 
   return (
     <BlogContext.Provider value={{ user, setUser, loggedUser, setLoggedUser }}>

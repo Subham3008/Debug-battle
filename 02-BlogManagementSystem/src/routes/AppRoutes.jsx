@@ -14,29 +14,26 @@ const AppRoutes = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <DashboardProtectedRoutes />,
+      element: <MainLayout />,
       children: [
         {
-          path: "",
-          element: <MainLayout />,
+          index: true,
+          element: <Home />,
+        },
+        {
+          element: <DashboardProtectedRoutes />,
           children: [
-            {
-              path: "",
-              element: <Home />,
-            },
             {
               path: "dashboard",
               element: <Dashboard />,
-              children: [
-                {
-                  path: "create",
-                  element: <Create />,
-                },
-                {
-                  path: "edit",
-                  element: <Edit />,
-                },
-              ],
+            },
+            {
+              path: "dashboard/create",
+              element: <Create />,
+            },
+            {
+              path: "dashboard/edit",
+              element: <Edit />,
             },
           ],
         },

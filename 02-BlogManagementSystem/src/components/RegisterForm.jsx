@@ -13,6 +13,7 @@ const RegisterForm = () => {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -160,20 +161,18 @@ const RegisterForm = () => {
           {/* hidden input for RHF */}
           <input
             type="hidden"
-            {...register("accountType", { required: "Select account type" })}
+            {...register("role", { required: "Select account type" })}
           />
 
-          {errors.accountType && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.accountType.message}
-            </p>
+          {errors.role && (
+            <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>
           )}
         </div>
 
         {/* Submit */}
         <button
           type="submit"
-          className="w-full rounded-md bg-primary py-2 text-sm font-medium text-white hover:bg-primary/90"
+          className="w-full rounded-md bg-primary py-2 text-sm font-medium text-white hover:bg-primary/90 cursor-pointer"
         >
           Create Account
         </button>

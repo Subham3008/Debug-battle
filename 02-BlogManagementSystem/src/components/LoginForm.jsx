@@ -4,12 +4,13 @@ import { MyContext } from "../context/BlogContext";
 import { toast } from "react-toastify";
 
 const LoginForm = () => {
-  const { loggedUser, setLoggedUser, user } = MyContext();
+  const { setLoggedUser, user } = MyContext();
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -21,13 +22,12 @@ const LoginForm = () => {
 
     if (!currentUser) {
       toast.error("User not found");
-      reset();
       return;
     }
     setLoggedUser(currentUser);
-    navigate("/");
     localStorage.setItem("blog_current_user", JSON.stringify(currentUser));
     toast.success("User logged in successfully.");
+    navigate("/"); 
     reset();
   };
 
@@ -96,7 +96,7 @@ const LoginForm = () => {
           {/* Button */}
           <button
             type="submit"
-            className="bg-primary text-white rounded-md py-2 hover:bg-primary/90"
+            className="bg-primary text-white rounded-md py-2 hover:bg-primary/90 cursor-pointer"
           >
             Sign In
           </button>
