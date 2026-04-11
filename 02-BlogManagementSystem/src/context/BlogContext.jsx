@@ -14,6 +14,24 @@ export const ContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("blog_current_user")) || null,
   );
 
+  /*--Delete Articals-- */
+  const handleDelete = (id) => {
+    const updatedPost = blogPost.filter((post) => {
+      return post.id !== id;
+    });
+    setBlogPost(updatedPost);
+    localStorage.setItem("blog_post", JSON.stringify(updatedPost));
+  };
+
+  /*--toggle function for publish or Unpublish-- */
+  const togglepublish = (id) => {
+    const updatedPost = blogPost.map((post) =>
+      post.id === id ? { ...post, published: !post.published } : post,
+    );
+    setBlogPost(updatedPost);
+    localStorage.setItem("blog_post", JSON.stringify(updatedPost));
+  };
+
   return (
     <BlogContext.Provider
       value={{
@@ -23,6 +41,8 @@ export const ContextProvider = ({ children }) => {
         setLoggedUser,
         blogPost,
         setBlogPost,
+        handleDelete,
+        togglepublish,
       }}
     >
       {children}

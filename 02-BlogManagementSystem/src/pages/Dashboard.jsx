@@ -3,7 +3,7 @@ import { MyContext } from "@/context/BlogContext";
 import { useNavigate } from "react-router";
 
 const Dashboard = () => {
-  const { blogPost, setBlogPost } = MyContext();
+  const { blogPost } = MyContext();
   const navigate = useNavigate();
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
@@ -60,7 +60,7 @@ const Dashboard = () => {
         <div className="space-y-3">
           {/* Article Card */}
           {blogPost.map((postData) => {
-            return <Articals postData={postData} />;
+            return <Articals key={postData.id} postData={postData} />;
           })}
         </div>
       </div>

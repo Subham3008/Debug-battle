@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { MyContext } from "@/context/BlogContext";
+import { nanoid } from "nanoid";
+import { useState } from "react";
 
 const BlogForm = () => {
   const { blogPost, setBlogPost, loggedUser } = MyContext();
+  const [isPublish, setIsPublish] = useState(false);
+
   const navigate = useNavigate();
 
   const {
@@ -16,7 +20,20 @@ const BlogForm = () => {
   });
 
   const onSubmit = (data) => {
-    const newPost = [...blogPost, { data, authorName: loggedUser?.name }];
+    const newPost = [
+      ...blogPost,
+      {
+        ...data,
+        authorName: loggedUser?.name,
+        id: nanoid(),
+        published: isPublish,
+        date: new Date().toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }),
+      },
+    ];
     console.log(newPost);
 
     setBlogPost(newPost);
@@ -133,14 +150,15 @@ const BlogForm = () => {
           {/* Actions */}
           <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-end">
             <button
-              type="button"
+              type="submit"
               className="rounded-md border px-4 py-2 text-sm hover:bg-gray-100"
             >
               Save as Draft
             </button>
 
             <button
-              type="submit" // 🔥 important
+              onClick={() => setIsPublish(true)}
+              type="submit"
               className="rounded-md bg-primary px-4 py-2 text-sm text-white hover:bg-primary/90"
             >
               Publish

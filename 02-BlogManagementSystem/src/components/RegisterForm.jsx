@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { MyContext } from "../context/BlogContext";
 import { toast } from "react-toastify";
+import { nanoid } from "nanoid/non-secure";
 
 const RegisterForm = () => {
   const { user, setUser } = MyContext();
@@ -18,7 +19,7 @@ const RegisterForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const newUser = [...user, data];
+    const newUser = [...user, {data, id: nanoid()}];
     setUser(newUser);
     localStorage.setItem("blog_user", JSON.stringify(newUser));
     toast.success("User registered successfully.");
