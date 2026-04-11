@@ -3,7 +3,7 @@ import { MyContext } from "@/context/BlogContext";
 import { useNavigate } from "react-router";
 
 const Dashboard = () => {
-  const { blogPost } = MyContext();
+  const { blogPost, loggedUser } = MyContext();
   const navigate = useNavigate();
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
@@ -12,7 +12,7 @@ const Dashboard = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
           <p className="mt-1 text-muted-foreground">
-            Manage your articles, Subham
+            Manage your articles, <span>{loggedUser?.name?.split(" ")[0]}</span>
           </p>
         </div>
 
@@ -39,17 +39,21 @@ const Dashboard = () => {
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-black/20 p-6 shadow-md">
           <p className="text-sm text-muted-foreground">Total Articles</p>
-          <h2 className="text-3xl font-semibold">1</h2>
+          <h2 className="text-3xl font-semibold">{blogPost?.length}</h2>
         </div>
 
         <div className="rounded-xl p-6 border border-black/20 p-6 shadow-md">
           <p className="text-sm text-muted-foreground">Published</p>
-          <h2 className="text-3xl font-semibold text-green-600">1</h2>
+          <h2 className="text-3xl font-semibold text-green-600">
+            {blogPost.filter((post) => post.published).length}
+          </h2>
         </div>
 
         <div className="rounded-xl border p-6 shadow-sm border-black/20 p-6 shadow-md">
           <p className="text-sm text-muted-foreground">Drafts</p>
-          <h2 className="text-3xl font-semibold text-muted-foreground">0</h2>
+          <h2 className="text-3xl font-semibold text-muted-foreground">
+            {blogPost.filter((post) => !post.published).length}
+          </h2>
         </div>
       </div>
 
