@@ -1,125 +1,148 @@
-import React from "react";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { MyContext } from "@/context/BlogContext";
 
 const BlogForm = () => {
+  const { blogPost, setBlogPost, loggedUser } = MyContext();
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    shouldFocusError: true, // 🔥 auto focus first error
+  });
+
+  const onSubmit = (data) => {
+    const newPost = [...blogPost, { data, authorName: loggedUser?.name }];
+    console.log(newPost);
+
+    setBlogPost(newPost);
+    localStorage.setItem("blog_post", JSON.stringify(newPost));
+    reset();
+    navigate("/dashboard");
+  };
+
   return (
-    <div className="">
+    <div>
       {/* Back Button */}
       <div className="mb-6">
         <div
           onClick={() => navigate("/dashboard")}
           className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground cursor-pointer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="mr-2 h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="m12 19-7-7 7-7" />
-            <path d="M19 12H5" />
-          </svg>
-          Back to Dashboard
+          ← Back to Dashboard
         </div>
       </div>
 
       {/* Card */}
-      <div className="rounded-xl border bg-card shadow-sm">
+      <div className="rounded-xl border border-black/20 bg-card shadow-md">
         {/* Header */}
         <div className="px-6 pt-6">
           <h2 className="text-xl font-semibold">Create New Article</h2>
         </div>
 
         {/* Form */}
-        <form className="px-6 py-6 space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-6 space-y-6">
           {/* Title */}
           <div>
             <label className="text-sm font-medium">Title</label>
             <input
+              {...register("title", {
+                required: "Title is required",
+              })}
               type="text"
               placeholder="Enter a compelling title..."
-              className="mt-1 w-full rounded-md border px-3 py-2 text-lg outline-none focus:ring-2 focus:ring-primary"
+              className="mt-1 w-full rounded-md border px-3 py-2 text-lg outline-none focus:ring-2 focus:ring-blue-700 border-black/20"
             />
+            {errors.title && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.title.message}
+              </p>
+            )}
           </div>
 
           {/* Excerpt */}
           <div>
             <label className="text-sm font-medium">Excerpt</label>
             <textarea
+              {...register("excerpt", {
+                required: "Excerpt is required",
+              })}
               rows="2"
-              placeholder="Write a brief summary of your article..."
-              className="mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Write a brief summary..."
+              className="mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-700 border-black/20"
             />
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               A short description that appears on the blog listing
             </p>
+            {errors.excerpt && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.excerpt.message}
+              </p>
+            )}
           </div>
 
           {/* Content */}
           <div>
             <label className="text-sm font-medium">Content</label>
             <textarea
-              rows="16"
+              {...register("content", {
+                required: "Content is required",
+                minLength: {
+                  value: 20,
+                  message: "Content must be at least 20 characters",
+                },
+              })}
+              rows="3"
               placeholder="Write your article content here... (Markdown supported)"
-              className="mt-1 w-full rounded-md border px-3 py-2 font-mono text-sm outline-none focus:ring-2 focus:ring-primary"
+              className="mt-1 w-full rounded-md border px-3 py-2 font-mono text-sm outline-none focus:ring-2 focus:ring-blue-700 border-black/20"
             />
-            <p className="mt-1 text-xs text-muted-foreground">
-              Supports Markdown: ## headers, **bold**, *italic*, `code`
+            <p className="text-xs text-muted-foreground">
+              Supports Markdown: ## for headers, **bold**, *italic*, `code`,
+              etc.
             </p>
+            {errors.content && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.content.message}
+              </p>
+            )}
           </div>
 
           {/* Tags */}
           <div>
             <label className="text-sm font-medium">Tags</label>
             <input
+              {...register("tags", {
+                required: "Tags are required",
+              })}
               type="text"
-              placeholder="Add tags (press Enter to add)"
-              className="mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Add tags..."
+              className="mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-700 border-black/20"
             />
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               Add up to 5 tags to help readers find your article
             </p>
+            {errors.tags && (
+              <p className="text-red-500 text-xs mt-1">{errors.tags.message}</p>
+            )}
           </div>
 
           {/* Actions */}
           <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-end">
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm hover:bg-gray-100"
+              className="rounded-md border px-4 py-2 text-sm hover:bg-gray-100"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
-                <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
-                <path d="M7 3v4a1 1 0 0 0 1 1h7" />
-              </svg>
               Save as Draft
             </button>
 
             <button
-              type="button"
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm text-white hover:bg-primary/90"
+              type="submit" // 🔥 important
+              className="rounded-md bg-primary px-4 py-2 text-sm text-white hover:bg-primary/90"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
-                <path d="m21.854 2.147-10.94 10.939" />
-              </svg>
               Publish
             </button>
           </div>

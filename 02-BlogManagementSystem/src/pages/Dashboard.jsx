@@ -1,6 +1,9 @@
+import Articals from "@/components/Articals";
+import { MyContext } from "@/context/BlogContext";
 import { useNavigate } from "react-router";
 
 const Dashboard = () => {
+  const { blogPost, setBlogPost } = MyContext();
   const navigate = useNavigate();
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
@@ -56,41 +59,9 @@ const Dashboard = () => {
 
         <div className="space-y-3">
           {/* Article Card */}
-          <div className="flex items-center justify-between rounded-xl border p-4 transition hover:shadow-md border-black/20 p-6 shadow-sm">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <h3 className="truncate font-medium">Nothing</h3>
-
-                <span className="rounded-md bg-primary px-2 py-0.5 text-xs text-white">
-                  Published
-                </span>
-              </div>
-
-              <p className="mt-1 truncate text-sm text-muted-foreground">
-                Nothing is a phone where lots of stuff
-              </p>
-
-              <p className="mt-2 text-xs text-muted-foreground">
-                Last updated: Apr 10, 2026
-              </p>
-            </div>
-
-            {/* Action Button */}
-            <button className="ml-4 rounded-md p-2 hover:bg-gray-100">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <circle cx="12" cy="12" r="1" />
-                <circle cx="19" cy="12" r="1" />
-                <circle cx="5" cy="12" r="1" />
-              </svg>
-            </button>
-          </div>
+          {blogPost.map((postData) => {
+            return <Articals postData={postData} />;
+          })}
         </div>
       </div>
     </main>
