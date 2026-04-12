@@ -4,9 +4,10 @@ import { useNavigate } from "react-router";
 import { MyContext } from "../context/BlogContext";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid/non-secure";
+import { Eye, EyeOff, PenLine } from "lucide-react";
 
 const RegisterForm = () => {
-  const { user, setUser } = MyContext();
+  const { user, setUser, show, setShow } = MyContext();
   const navigate = useNavigate();
   const [selected, setSelected] = useState("reader");
   const {
@@ -38,8 +39,8 @@ const RegisterForm = () => {
     <div className="w-full max-w-md rounded-xl border bg-card text-card-foreground shadow-sm">
       {/* Header */}
       <div className="px-6 pt-6 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-          ✏️
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white">
+           <PenLine />
         </div>
 
         <h2 className="text-2xl font-semibold">Create an Account</h2>
@@ -87,28 +88,38 @@ const RegisterForm = () => {
         {/* Password */}
         <div>
           <label className="text-sm font-medium">Password</label>
-          <input
-            type="password"
-            placeholder="Create a password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 6,
-                message: "Minimum 6 characters required",
-              },
-            })}
-            className="mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"
-          />
-          {errors.password && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.password.message}
-            </p>
-          )}
+          <div className="relative">
+            <input
+              type={show ? "text" : "password"}
+              placeholder="Create a password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Minimum 6 characters required",
+                },
+              })}
+              className="mt-1 w-full rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password.message}
+              </p>
+            )}
+            <button
+              onClick={() => setShow(!show)}
+              type="button"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2  hover:text-blue-500 transition cursor-pointer"
+            >
+              {show ? <EyeOff size={15} /> : <Eye size={15} />}
+            </button>
+          </div>
         </div>
 
         {/* Confirm Password */}
         <div>
           <label className="text-sm font-medium">Confirm Password</label>
+
           <input
             type="password"
             placeholder="Confirm your password"

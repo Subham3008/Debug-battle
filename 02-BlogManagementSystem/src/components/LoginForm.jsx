@@ -2,9 +2,10 @@ import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { MyContext } from "../context/BlogContext";
 import { toast } from "react-toastify";
+import { Eye, EyeOff, PenLine } from "lucide-react";
 
 const LoginForm = () => {
-  const { setLoggedUser, user } = MyContext();
+  const { setLoggedUser, user, show, setShow } = MyContext();
   const navigate = useNavigate();
 
   const {
@@ -27,7 +28,7 @@ const LoginForm = () => {
     setLoggedUser(currentUser);
     localStorage.setItem("blog_current_user", JSON.stringify(currentUser));
     toast.success("User logged in successfully.");
-    navigate("/"); 
+    navigate("/");
     reset();
   };
 
@@ -35,8 +36,8 @@ const LoginForm = () => {
     <div className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm w-full max-w-md">
       {/* Header */}
       <div className="text-center px-6">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-          ✏️
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white">
+          <PenLine />
         </div>
         <h2 className="font-semibold text-2xl">Welcome Back</h2>
         <p className="text-muted-foreground text-sm">
@@ -75,22 +76,33 @@ const LoginForm = () => {
             <label htmlFor="password" className="text-sm font-medium">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Minimum 6 characters required",
-                },
-              })}
-              className="border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message}</p>
-            )}
+            <div className="relative">
+              <input
+                type={show ? "text" : "password"}
+                id="password"
+                placeholder="Enter your password"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Minimum 6 characters required",
+                  },
+                })}
+                className="border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary w-full"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-xs">
+                  {errors.password.message}
+                </p>
+              )}
+              <button
+                onClick={() => setShow(!show)}
+                type="button"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2  hover:text-blue-500 transition cursor-pointer"
+              >
+                {show ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
           </div>
 
           {/* Button */}

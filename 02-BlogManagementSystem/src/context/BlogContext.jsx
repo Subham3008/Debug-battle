@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 const BlogContext = createContext();
 
 export const ContextProvider = ({ children }) => {
+  const [show, setShow] = useState(false);
   const [blogPost, setBlogPost] = useState(
     JSON.parse(localStorage.getItem("blog_post")) || [],
   );
@@ -52,6 +53,8 @@ export const ContextProvider = ({ children }) => {
         handleEdit,
         editBlog,
         setEditBlog,
+        show,
+        setShow,
       }}
     >
       {children}
