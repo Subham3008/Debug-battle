@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const BlogForm = () => {
   const { blogPost, setBlogPost, loggedUser, editBlog, setEditBlog } =
     MyContext();
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(editBlog?.tags || []);
   const [tagInput, setTagInput] = useState("");
 
   const [isPublish, setIsPublish] = useState(false);
