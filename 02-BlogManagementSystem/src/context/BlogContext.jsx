@@ -31,7 +31,8 @@ export const ContextProvider = ({ children }) => {
     setBlogPost(updatedPost);
     localStorage.setItem("blog_post", JSON.stringify(updatedPost));
   };
-
+  /*---filter published data---*/
+  const getPublished = blogPost.filter((post) => post.published);
   return (
     <BlogContext.Provider
       value={{
@@ -43,6 +44,7 @@ export const ContextProvider = ({ children }) => {
         setBlogPost,
         handleDelete,
         togglepublish,
+        getPublished,
       }}
     >
       {children}

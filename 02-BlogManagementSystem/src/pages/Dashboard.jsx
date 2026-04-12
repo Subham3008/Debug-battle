@@ -1,9 +1,10 @@
 import Articals from "@/components/Articals";
 import { MyContext } from "@/context/BlogContext";
+import { NotebookPen } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const Dashboard = () => {
-  const { blogPost, loggedUser } = MyContext();
+  const { blogPost, loggedUser, getPublished } = MyContext();
   const navigate = useNavigate();
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
@@ -45,7 +46,7 @@ const Dashboard = () => {
         <div className="rounded-xl p-6 border border-black/20 p-6 shadow-md">
           <p className="text-sm text-muted-foreground">Published</p>
           <h2 className="text-3xl font-semibold text-green-600">
-            {blogPost.filter((post) => post.published).length}
+            {getPublished.length}
           </h2>
         </div>
 
@@ -60,13 +61,40 @@ const Dashboard = () => {
       {/* Articles */}
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Your Articles</h2>
+        {blogPost.length < 1 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center border border-black/20 rounded-sm">
+            {/* Icon */}
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+              <NotebookPen />
+            </div>
 
-        <div className="space-y-3">
-          {/* Article Card */}
-          {blogPost.map((postData) => {
-            return <Articals key={postData.id} postData={postData} />;
-          })}
-        </div>
+            {/* Title */}
+            <h2 className="text-xl font-semibold tracking-tight">
+              No articles yet
+            </h2>
+
+            {/* Description */}
+            <p className="mt-2 text-sm text-muted-foreground max-w-md">
+              You haven’t written any articles yet. Start sharing your thoughts
+              with the world
+            </p>
+
+            {/* Button */}
+            <button
+              onClick={() => navigate("/dashboard/create")}
+              className="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 cursor-pointer"
+            >
+              Create Your First Article
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {/* Article Card */}
+            {blogPost.map((postData) => {
+              return <Articals key={postData.id} postData={postData} />;
+            })}
+          </div>
+        )}
       </div>
     </main>
   );

@@ -1,8 +1,10 @@
+import PublishedPost from "@/components/PublishedPost";
 import { MyContext } from "@/context/BlogContext";
+import { NotebookPen } from "lucide-react";
 import React from "react";
 
 const Home = () => {
-  const{blogPost, setBlogPost}=MyContext()
+  const { getPublished } = MyContext();
   return (
     <main className="mx-auto max-w-5xl px-4 py-12">
       <section className="mb-12 text-center">
@@ -20,11 +22,34 @@ const Home = () => {
           <h2 className="text-2xl font-semibold tracking-tight">
             Latest Articles
           </h2>
-          <span className="text-sm text-muted-foreground">5 articles</span>
+          <span className="text-sm text-muted-foreground">
+            {getPublished.length} articles
+          </span>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {}
-        </div>
+        {getPublished.length < 1 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center border border-black/20 rounded-sm">
+            {/* Icon */}
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+              <NotebookPen />
+            </div>
+
+            {/* Title */}
+            <h2 className="text-xl font-semibold tracking-tight">
+              No articles yet
+            </h2>
+
+            {/* Description */}
+            <p className="mt-2 text-sm text-muted-foreground max-w-md">
+              Author haven’t written any articles yet.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {getPublished.map((post) => {
+              return <PublishedPost key={post.id} post={post} />;
+            })}
+          </div>
+        )}
       </section>
     </main>
   );

@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Eye, EyeOff, SquarePen, Trash } from "lucide-react";
 import { MyContext } from "@/context/BlogContext";
 
 const Articals = ({ postData }) => {
@@ -21,12 +21,12 @@ const Articals = ({ postData }) => {
           <h3 className="truncate font-medium">{postData.title}</h3>
 
           {postData.published ? (
-            <span className="rounded-md bg-gray-200 px-2 py-0.5 text-xs text-black/80 font-bold">
-              Draft
+            <span className=" rounded-md bg-primary px-2 py-0.5 text-xs text-white">
+              Published
             </span>
           ) : (
-            <span className="rounded-md bg-primary px-2 py-0.5 text-xs text-white">
-              Published
+            <span className="rounded-md bg-gray-200 px-2 py-0.5 text-xs text-black/80 font-bold">
+              Draft
             </span>
           )}
         </div>
@@ -49,36 +49,38 @@ const Articals = ({ postData }) => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-48">
-          {/* <DropdownMenuLabel>
-            <p className="font-bold text-black/70 text-md">
-              {loggedUser?.name?.split(" ")[0]}
-            </p>
-            <p className="text-[10px] text-muted-foreground break-all">
-              {loggedUser?.email}
-            </p>
-            <p className="font-medium capitalize">{loggedUser?.role}</p>
-          </DropdownMenuLabel> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem className="border-b">
+            <Eye />
             <span className="text-black/70">View</span>
           </DropdownMenuItem>
           <DropdownMenuItem className="border-b">
-            <span className="text-black/70">Edit</span>
+            {" "}
+            <SquarePen />
+            <span className="text-black/70 ">Edit</span>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => togglepublish(postData.id)}
             className="border-b"
           >
-            <span className="text-black/70">
-              {postData.published ? "Unpublish" : "Publish"}
-            </span>
+            {postData.published ? (
+              <div className="text-black/70 flex items-center gap-2 ">
+                <EyeOff /> <span>Unpublish</span>
+              </div>
+            ) : (
+              <div className="text-black/70 flex items-center gap-2">
+                <Eye /> <span>Publish</span>
+              </div>
+            )}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
               handleDelete(postData.id);
             }}
-            className="border-b"
+            className="border-b text-black/70 flex items-center gap-2 hover:bg-amber-400 w-full transition-all duration-300 rounded-sm"
           >
+            {" "}
+            <Trash />
             <span className="text-red-500">Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

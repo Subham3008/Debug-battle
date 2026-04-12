@@ -17,7 +17,10 @@ const Navbar = () => {
   return (
     <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
       {/* Logo */}
-      <div onClick={()=>navigate("/")} className="flex items-center gap-2">
+      <div
+        onClick={() => navigate("/")}
+        className="flex items-center gap-2 cursor-pointer"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6 text-primary"
