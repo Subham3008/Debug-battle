@@ -38,19 +38,19 @@ const Dashboard = () => {
 
       {/* Stats */}
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-black/20 p-6 shadow-md">
+        <div className="rounded-xl border border-black/20 p-6 shadow-md bg-white">
           <p className="text-sm text-muted-foreground">Total Articles</p>
           <h2 className="text-3xl font-semibold">{blogPost?.length}</h2>
         </div>
 
-        <div className="rounded-xl p-6 border border-black/20 p-6 shadow-md">
+        <div className="rounded-xl p-6 border border-black/20 p-6 shadow-md bg-white">
           <p className="text-sm text-muted-foreground">Published</p>
           <h2 className="text-3xl font-semibold text-green-600">
             {getPublished.length}
           </h2>
         </div>
 
-        <div className="rounded-xl border p-6 shadow-sm border-black/20 p-6 shadow-md">
+        <div className="rounded-xl border p-6 shadow-sm border-black/20 p-6 shadow-md bg-white">
           <p className="text-sm text-muted-foreground">Drafts</p>
           <h2 className="text-3xl font-semibold text-muted-foreground">
             {blogPost.filter((post) => !post.published).length}
@@ -62,7 +62,7 @@ const Dashboard = () => {
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Your Articles</h2>
         {blogPost.length < 1 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center border border-black/20 rounded-sm">
+          <div className="flex flex-col items-center justify-center py-20 text-center border border-black/20 rounded-sm bg-white">
             {/* Icon */}
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
               <NotebookPen />

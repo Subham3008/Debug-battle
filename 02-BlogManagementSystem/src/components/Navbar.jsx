@@ -80,13 +80,15 @@ const Navbar = () => {
                 <p className="font-medium capitalize">{loggedUser?.role}</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => navigate("/dashboard")}
-                className="border-b"
-              >
-                <LayoutDashboard />
-                <span className="text-black/70">Dashboard</span>
-              </DropdownMenuItem>
+              {loggedUser?.role === "author" && (
+                <DropdownMenuItem
+                  onClick={() => navigate("/dashboard")}
+                  className="border-b"
+                >
+                  <LayoutDashboard />
+                  <span className="text-black/70">Dashboard</span>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={() => {
                   setLoggedUser(null);

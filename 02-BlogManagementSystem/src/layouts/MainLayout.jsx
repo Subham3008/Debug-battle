@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="bg-gray-100">
       <header className="sticky top-0 z-50 w-full border-b border-black/20 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
         <Navbar />
       </header>

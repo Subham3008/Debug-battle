@@ -14,6 +14,7 @@ export const ContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("blog_current_user")) || null,
   );
 
+  const [editBlog, setEditBlog] = useState(null);
   /*--Delete Articals-- */
   const handleDelete = (id) => {
     const updatedPost = blogPost.filter((post) => {
@@ -33,6 +34,9 @@ export const ContextProvider = ({ children }) => {
   };
   /*---filter published data---*/
   const getPublished = blogPost.filter((post) => post.published);
+
+  /*---Edit Post--- */
+  const handleEdit = (id) => {};
   return (
     <BlogContext.Provider
       value={{
@@ -45,6 +49,9 @@ export const ContextProvider = ({ children }) => {
         handleDelete,
         togglepublish,
         getPublished,
+        handleEdit,
+        editBlog,
+        setEditBlog,
       }}
     >
       {children}

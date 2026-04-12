@@ -2,13 +2,14 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import DashboardProtectedRoutes from "./DashboardProtectedRoutes";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
-import Edit from "../pages/Edit";
-import Create from "../pages/Create";
+
 import Dashboard from "../pages/Dashboard";
 import AuthProtectedRoutes from "./AuthProtectedRoutes";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
+import BlogDetails from "@/pages/BlogDetails";
+import Create from "@/pages/Create";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const AppRoutes = () => {
           element: <Home />,
         },
         {
+          path: "blog/:id",
+          element: <BlogDetails />,
+        },
+        {
           element: <DashboardProtectedRoutes />,
           children: [
             {
@@ -30,10 +35,6 @@ const AppRoutes = () => {
             {
               path: "dashboard/create",
               element: <Create />,
-            },
-            {
-              path: "dashboard/edit",
-              element: <Edit />,
             },
           ],
         },

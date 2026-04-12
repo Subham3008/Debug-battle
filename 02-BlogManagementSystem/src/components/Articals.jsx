@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Ellipsis, Eye, EyeOff, SquarePen, Trash } from "lucide-react";
 import { MyContext } from "@/context/BlogContext";
+import { useNavigate } from "react-router";
 
 const Articals = ({ postData }) => {
-  const { handleDelete, togglepublish } = MyContext();
-  console.log(postData);
+  const { handleDelete, togglepublish, setEditBlog } = MyContext();
+  const naviggate = useNavigate();
 
   return (
-    <div className="flex items-center justify-between rounded-xl border p-4 transition hover:shadow-md border-black/20 p-6 shadow-sm">
+    <div className="flex items-center justify-between rounded-xl border p-4 transition hover:shadow-md border-black/20 p-6 shadow-sm bg-white">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <h3 className="truncate font-medium">{postData.title}</h3>
@@ -54,7 +55,13 @@ const Articals = ({ postData }) => {
             <Eye />
             <span className="text-black/70">View</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="border-b">
+          <DropdownMenuItem
+            onClick={() => {
+              setEditBlog(postData);
+              naviggate("/dashboard/create");
+            }}
+            className="border-b"
+          >
             {" "}
             <SquarePen />
             <span className="text-black/70 ">Edit</span>

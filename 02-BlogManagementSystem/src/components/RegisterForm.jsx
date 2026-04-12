@@ -19,7 +19,12 @@ const RegisterForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const newUser = [...user, {data, id: nanoid()}];
+    const isExists = user.find((elem) => elem.email === data.email);
+    if (isExists) {
+      toast.error("User already exists");
+      return;
+    }
+    const newUser = [...user, { ...data, id: nanoid() }];
     setUser(newUser);
     localStorage.setItem("blog_user", JSON.stringify(newUser));
     toast.success("User registered successfully.");

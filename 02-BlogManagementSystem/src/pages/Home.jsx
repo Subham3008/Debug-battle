@@ -27,7 +27,7 @@ const Home = () => {
           </span>
         </div>
         {getPublished.length < 1 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center border border-black/20 rounded-sm">
+          <div className="flex flex-col items-center justify-center py-20 text-center border border-black/20 rounded-sm bg-white">
             {/* Icon */}
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
               <NotebookPen />
