@@ -27,6 +27,7 @@ export const useAuth = () => {
     setRegisteredAdmins(admin);
     storage.set("registered_admins", admin);
     toast.success("Admin registered successfully");
+    navigate("/");
     console.log(data);
     reset();
   };
@@ -40,9 +41,9 @@ export const useAuth = () => {
       return;
     }
     setLoggedInAdmin(logAdmin);
-    storage.set("logged_admins", logAdmin);
+    storage.set("logged_admin", logAdmin);
     toast.success("Admin logged In successfully");
-    console.log(data);
+
     reset();
   };
 

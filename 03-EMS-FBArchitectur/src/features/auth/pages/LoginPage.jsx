@@ -3,15 +3,8 @@ import FormButton from "../../../shared/components/FormButton";
 import { useAuth } from "../hooks/useAuth";
 
 const LoginPage = () => {
-  const {
-    register,
-    handleSubmit,
-    errors,
-
-    navigate,
-
-    onLoggedSubmit,
-  } = useAuth();
+  const { register, handleSubmit, errors, navigate, onLoggedSubmit } =
+    useAuth();
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-4xl overflow-hidden rounded-3xl bg-white shadow-2xl grid grid-cols-1 lg:grid-cols-2">

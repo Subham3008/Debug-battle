@@ -11,7 +11,7 @@ export const AuthContextProvider = ({ children }) => {
     const regAdmins = storage.get("registered_admins");
     setRegisteredAdmins(() => (regAdmins ? regAdmins : []));
 
-    const logAdmin = storage.get("logged_admins");
+    const logAdmin = storage.get("logged_admin");
     setLoggedInAdmin(logAdmin);
   }, []);
 
