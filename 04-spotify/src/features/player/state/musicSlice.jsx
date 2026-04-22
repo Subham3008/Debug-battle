@@ -5,6 +5,7 @@ const playerSlice = createSlice({
   initialState: {
     currentPlayingSong: null,
     isPlaying: false,
+    queue: [],
   },
   reducers: {
     playNewSong: (state, action) => {

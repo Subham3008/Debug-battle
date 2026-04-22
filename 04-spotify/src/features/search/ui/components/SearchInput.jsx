@@ -3,7 +3,7 @@ import { useSearch } from "../../hooks/useSearch";
 import SearchContainer from "./searchContainer";
 
 const SearchInput = ({ ...props }) => {
-  const { handleSearch, searchValue, searchSong } = useSearch();
+  const { handleSearch, searchSong, isVisible, handleNavigate } = useSearch();
   return (
     <div className="w-100 ">
       <input
@@ -11,7 +11,9 @@ const SearchInput = ({ ...props }) => {
         className="w-full border border-gray-600 rounded-2xl p-3"
         {...props}
       />
-      {searchValue?.trim() && <SearchContainer songs={searchSong} />}
+      {isVisible && (
+        <SearchContainer songs={searchSong} handleNavigate={handleNavigate} />
+      )}
     </div>
   );
 };

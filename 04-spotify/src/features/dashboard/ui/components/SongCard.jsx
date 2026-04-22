@@ -1,12 +1,22 @@
 import React from "react";
 import { useDashboard } from "../../hooks/useDashboard";
-import { playNewSong } from "../../../player/state/musicSlice";
+import { pause, playNewSong } from "../../../player/state/musicSlice";
+import { Pause, Play } from "lucide-react";
 
 const SongCard = ({ song }) => {
-  const { dispatch } = useDashboard();
+  const {
+    dispatch,
+    handleNavigate,
+    isPlaying,
+    currentPlayingSong,
+    isCurrentSong,
+  } = useDashboard();
 
   return (
-    <div className="bg-[#181818] p-4 rounded-lg hover:bg-[#282828] transition duration-300 group cursor-pointer">
+    <div
+      onClick={() => handleNavigate(song)}
+      className="bg-[#181818] p-4 rounded-lg hover:bg-[#282828] transition duration-300 group cursor-pointer"
+    >
       {/* Image */}
       <div className="relative">
         <img
@@ -16,14 +26,31 @@ const SongCard = ({ song }) => {
         />
 
         {/* Play Button */}
-        <button
-          onClick={() => dispatch(playNewSong(song))}
-          className="absolute bottom-3 right-3 bg-green-500 p-3 rounded-full shadow-lg 
+        {isPlaying && isCurrentSong(song) ? (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(pause());
+            }}
+            className="absolute bottom-3 right-3 text-black bg-green-500 p-3 rounded-full shadow-lg 
           opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-3 
           transition-all duration-300 hover:scale-110"
-        >
-          ▶
-        </button>
+          >
+            <Pause fill="black" />
+          </button>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(playNewSong(song));
+            }}
+            className="absolute bottom-3 right-3 text-black bg-green-500 p-3 rounded-full shadow-lg 
+          opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-3 
+          transition-all duration-300 hover:scale-110"
+          >
+            <Play fill="black" />
+          </button>
+        )}
       </div>
 
       {/* Text */}
