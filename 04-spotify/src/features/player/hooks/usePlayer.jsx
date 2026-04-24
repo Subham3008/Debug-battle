@@ -33,7 +33,19 @@ export const usePlayer = () => {
     }
   };
 
+  const playNextSong = () => {
+    // next song logic
+  };
+
+  const playPreviousSong = () => {
+    // previous song logic
+  };
+
   return {
     togglePlayAndPause,
+    playNextSong,
+    playPreviousSong,
+    isPlaying,
+    currentPlayingSong
   };
 };

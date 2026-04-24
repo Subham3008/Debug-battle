@@ -34,6 +34,7 @@ export const useSearch = () => {
 
   const handleNavigate = (song) => {
     setIsVisible(false);
+    dispatch(playNewSong(song));
     navigate(`/dashboard/details/${song.id}`);
   };
 

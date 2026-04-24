@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { playNewSong } from "../../player/state/musicSlice";
 import { allSongs } from "../api/SongApi";
 
@@ -9,13 +9,10 @@ export const useDashboard = () => {
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleNavigate = (song) => {
-    if (location.pathname === "/dashboard") {
-      dispatch(playNewSong(song));
-      navigate(`/dashboard/details/${song.id}`);
-    }
+    dispatch(playNewSong(song));
+    navigate(`/dashboard/details/${song.id}`);
   };
 
   const isCurrentSong = (song) => {
