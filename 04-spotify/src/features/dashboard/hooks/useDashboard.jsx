@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { playNewSong } from "../../player/state/musicSlice";
+import { playNewSong, setQueue } from "../../player/state/musicSlice";
 import { allSongs } from "../api/SongApi";
+import { useEffect } from "react";
 
 export const useDashboard = () => {
+  const songs = allSongs();
   const { currentPlayingSong, isPlaying } = useSelector(
     (store) => store.player,
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //Navigate to details page
   const handleNavigate = (song) => {
     dispatch(playNewSong(song));
     navigate(`/dashboard/details/${song.id}`);
@@ -21,11 +24,12 @@ export const useDashboard = () => {
 
   const { id } = useParams();
 
-  const song = allSongs();
+  const updatedSong = songs.find((elem) => elem.id === Number(id));
 
-  const updatedSong = song.find((elem) => {
-    return elem.id === Number(id);
-  });
+  //queue update
+  useEffect(() => {
+    dispatch(setQueue(songs));
+  }, [dispatch]);
 
   return {
     dispatch,
@@ -35,5 +39,6 @@ export const useDashboard = () => {
     currentPlayingSong,
     navigate,
     updatedSong,
+    songs,
   };
 };

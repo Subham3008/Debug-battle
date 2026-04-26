@@ -34,7 +34,7 @@ const SongDetails = () => {
         <div className="flex flex-col md:flex-row items-center md:items-end gap-8">
           {/* Song Image */}
           <img
-            src={updatedSong.thumbnail}
+            src={songData.thumbnail}
             alt="song"
             className="w-60 h-60 md:w-72 md:h-72 object-cover rounded-lg shadow-2xl"
           />
@@ -44,10 +44,10 @@ const SongDetails = () => {
             <p className="uppercase text-sm text-gray-400">Now Playing</p>
 
             <h1 className="text-3xl md:text-2xl font-bold mt-2">
-              {updatedSong.title}
+              {songData.title}
             </h1>
 
-            <p className="text-lg text-gray-300 mt-3">{updatedSong.artist}</p>
+            <p className="text-lg text-gray-300 mt-3">{songData.artist}</p>
 
             {/* Controls */}
             <div className="flex items-center justify-center md:justify-start gap-6 mt-6">
@@ -85,7 +85,7 @@ const SongDetails = () => {
         <div className="mt-10 border-t border-gray-800 pt-6">
           <h2 className="text-xl font-semibold mb-4">About</h2>
           <p className="text-gray-400 max-w-2xl">
-            Enjoy this track by {updatedSong.artist}. Dive into the vibe and let
+            Enjoy this track by {songData.artist}. Dive into the vibe and let
             the music take over.
           </p>
         </div>

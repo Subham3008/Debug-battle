@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { allSongs } from "../../api/SongApi";
 import SongCard from "../components/SongCard";
+import { useDashboard } from "../../hooks/useDashboard";
 
 const HomePage = () => {
-  const songs = allSongs();
+  const { songs } = useDashboard();
   const [visibleCount, setVisibleCount] = useState(20);
 
   const loadMore = () => {
     setVisibleCount((prev) => prev + 20);
   };
-  console.log(songs);
+  // console.log(songs);
 
   return (
     <div>

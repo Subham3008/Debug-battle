@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   const { isPlaying, currentPlayingSong } = useSelector(
     (store) => store.player,
   );
-  console.log(isPlaying);
+  // console.log(isPlaying);
 
   return (
     <div className="h-screen bg-black text-white">
@@ -29,8 +29,8 @@ const DashboardLayout = () => {
           </Panel>
         </Group>
       </div>
-      <div className="relative p-2 flex w-full">
-        <div className="">
+      <div className="relative flex w-full px-5 gap-4 py-2">
+        <div className="w-[25%]">
           <PlayingMusicInfo />
         </div>
         <div>{currentPlayingSong && <Player />}</div>
