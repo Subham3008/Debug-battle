@@ -7,7 +7,6 @@ const SongDetails = () => {
   const { currentPlayingSong, navigate, isPlaying, dispatch, updatedSong } =
     useDashboard();
 
-  console.log(updatedSong);
   const songData = currentPlayingSong || updatedSong;
 
   if (!songData) {

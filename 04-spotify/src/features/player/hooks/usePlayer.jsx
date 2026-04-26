@@ -1,44 +1,63 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { pause, play } from "../state/musicSlice";
-// import { allSongs } from "../../dashboard/api/SongApi";
+
+const sharedAudio = new Audio(); //global single audio instance
 
 export const usePlayer = () => {
   const dispatch = useDispatch();
-  const audioRef = useRef(new Audio());
-  console.log(audioRef);
+
+  const audioRef = useRef(sharedAudio);
+
+  const [songTime, setSongTime] = useState(0);
+  const [songDuration, setSongDuration] = useState(0);
 
   const { currentPlayingSong, isPlaying } = useSelector(
     (store) => store.player,
   );
 
-  // useEffect(() => {
-  //   if (!currentPlayingSong) return;
-
-  //   audioRef.current.src = currentPlayingSong.url;
-  //   audioRef.current.play();
-  // }, [currentPlayingSong]);
-
-  // useEffect(() => {
-  //   if (!currentPlayingSong) return;
-  //   if (isPlaying) {
-  //     audioRef.current.play();
-  //   } else {
-  //     audioRef.current.pause();
-  //   }
-  // }, [isPlaying]);
-
+  // Song change
   useEffect(() => {
     if (!currentPlayingSong) return;
 
+    setSongTime(0);
+    setSongDuration(0);
+
     audioRef.current.src = currentPlayingSong.url;
+    audioRef.current.play();
+  }, [currentPlayingSong]);
+
+  // Play / Pause
+  useEffect(() => {
+    if (!currentPlayingSong) return;
 
     if (isPlaying) {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-  }, [currentPlayingSong, isPlaying]);
+  }, [isPlaying]);
+
+  // Progress tracking
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    const updateTime = () => {
+      setSongTime(audio.currentTime);
+    };
+
+    const loadedMetadata = () => {
+      setSongDuration(audio.duration);
+    };
+
+    audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("loadedmetadata", loadedMetadata);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updateTime);
+      audio.removeEventListener("loadedmetadata", loadedMetadata);
+    };
+  }, []);
 
   const togglePlayAndPause = () => {
     if (isPlaying) {
@@ -48,29 +67,28 @@ export const usePlayer = () => {
     }
   };
 
-  //progress bar logic
+  const handleSeek = (value) => {
+    audioRef.current.currentTime = value;
+    setSongTime(value);
+  };
 
-  // let songTime = audioRef.current.currentTime;
-  // let songDuration = audioRef.current.duration;
-  // const formatTime = (time) => {
-  //   if (!time) return "0:00";
+  const formatTime = (time) => {
+    if (!time) return "0:00";
 
-  //   const mins = Math.floor(time / 60);
-  //   const secs = Math.floor(time % 60);
+    const mins = Math.floor(time / 60);
+    const secs = Math.floor(time % 60);
 
-  //   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-  // };
-
-  // const progress = songDuration ? (songTime / songDuration) * 100 : 0;
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+  };
 
   return {
     togglePlayAndPause,
     isPlaying,
     currentPlayingSong,
     dispatch,
-    // progress,
-    // songDuration,
-    // songTime,
-    // formatTime,
+    songTime,
+    songDuration,
+    formatTime,
+    handleSeek,
   };
 };

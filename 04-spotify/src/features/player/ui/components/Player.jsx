@@ -9,10 +9,10 @@ const Player = () => {
     togglePlayAndPause,
     isPlaying,
     dispatch,
-    // progress,
-    // songDuration,
-    // songTime,
-    // formatTime,
+    songTime,
+    songDuration,
+    formatTime,
+    handleSeek,
   } = usePlayer();
 
   return (
@@ -25,8 +25,7 @@ const Player = () => {
 
         <button
           onClick={togglePlayAndPause}
-          className="w-12 h-12 bg-green-500 rounded-full
-                     flex items-center justify-center"
+          className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center"
         >
           {isPlaying ? <Pause fill="black" /> : <Play fill="black" />}
         </button>
@@ -36,20 +35,22 @@ const Player = () => {
         </button>
       </div>
 
-      {/* Timer + Progress */}
+      {/* Progress + Timer */}
       <div className="flex items-center gap-3 w-96">
-        {/* <span className="text-xs text-zinc-400">{formatTime(songTime)}</span> */}
+        <span className="text-xs text-zinc-400">{formatTime(songTime)}</span>
 
-        <div className="flex-1 h-1 bg-zinc-700 rounded-full overflow-hidden">
-          <div
-            // style={{ width: `${progress}%` }}
-            className="h-full bg-green-500"
-          />
-        </div>
+        <input
+          type="range"
+          min="0"
+          max={songDuration || 0}
+          value={songTime}
+          onChange={(e) => handleSeek(e.target.value)}
+          className="w-full accent-white cursor-pointer"
+        />
 
-        {/* <span className="text-xs text-zinc-400">
+        <span className="text-xs text-zinc-400">
           {formatTime(songDuration)}
-        </span> */}
+        </span>
       </div>
     </div>
   );
