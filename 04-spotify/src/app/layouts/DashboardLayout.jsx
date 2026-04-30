@@ -5,6 +5,7 @@ import { Group, Panel } from "react-resizable-panels";
 import Player from "../../features/player/ui/components/Player";
 import { useSelector } from "react-redux";
 import PlayingMusicInfo from "../../features/player/ui/components/PlayingMusicInfo";
+import Right from "../../features/dashboard/ui/components/Right";
 
 const DashboardLayout = () => {
   const { isPlaying, currentPlayingSong } = useSelector(
@@ -25,7 +26,7 @@ const DashboardLayout = () => {
             <Outlet />
           </Panel>
           <Panel maxSize={"20%"} minSize={"15%"} className="bg-[#121212] p-5">
-            right
+            <Right/>
           </Panel>
         </Group>
       </div>
