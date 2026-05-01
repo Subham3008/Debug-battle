@@ -6,6 +6,8 @@ import RegisterPage from "../../features/auth/ui/pages/RegisterPage";
 import DashboardLayout from "../layouts/DashboardLayout";
 import HomePage from "../../features/dashboard/ui/pages/HomePage";
 import SongDetails from "../../features/dashboard/ui/pages/SongDetails";
+import ArtistSongPage from "../../features/dashboard/ui/pages/ArtistSongPage";
+import Playlist from "../../features/dashboard/ui/components/Playlist";
 const AppRoutes = () => {
   const router = createBrowserRouter([
     {
@@ -39,6 +41,14 @@ const AppRoutes = () => {
         {
           path: "details/:id",
           element: <SongDetails />,
+        },
+        {
+          path: "artist/:name",
+          element: <ArtistSongPage />,
+        },
+        {
+          path: "playlist",
+          element: <Playlist />,
         },
       ],
     },

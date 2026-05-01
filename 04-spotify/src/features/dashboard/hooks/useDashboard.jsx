@@ -2,17 +2,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { playNewSong, setQueue } from "../../player/state/musicSlice";
 import { allSongs } from "../api/SongApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const useDashboard = () => {
   const songs = allSongs();
-  const { currentPlayingSong, isPlaying } = useSelector(
+  console.log(songs);
+  
+
+  const { currentPlayingSong, isPlaying, queue } = useSelector(
     (store) => store.player,
   );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //Navigate to details page
+  // Navigate to song details
   const handleNavigate = (song) => {
     dispatch(playNewSong(song));
     navigate(`/dashboard/details/${song.id}`);
@@ -26,10 +30,18 @@ export const useDashboard = () => {
 
   const updatedSong = songs.find((elem) => elem.id === Number(id));
 
-  //queue update
+  // queue update
   useEffect(() => {
     dispatch(setQueue(songs));
   }, [dispatch]);
+
+  // all unique artists
+  const allArtists = [...new Set(queue.map((song) => song.artist))];
+
+  // ✅ FIXED artist navigation
+  const handleArtistNavigate = (artist) => {
+    navigate(`/dashboard/artist/${artist.replaceAll(" ", "-").toLowerCase()}`);
+  };
 
   return {
     dispatch,
@@ -40,5 +52,7 @@ export const useDashboard = () => {
     navigate,
     updatedSong,
     songs,
+    allArtists,
+    handleArtistNavigate,
   };
 };

@@ -75,6 +75,7 @@ const SongDetails = () => {
               {/* More Options */}
               <button className="text-gray-400 hover:text-white">
                 <MoreHorizontal size={22} />
+                {/* Add to playlist */}
               </button>
             </div>
           </div>

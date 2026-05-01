@@ -6,6 +6,7 @@ import Player from "../../features/player/ui/components/Player";
 import { useSelector } from "react-redux";
 import PlayingMusicInfo from "../../features/player/ui/components/PlayingMusicInfo";
 import Right from "../../features/dashboard/ui/components/Right";
+import Left from "../../features/dashboard/ui/pages/Left";
 
 const DashboardLayout = () => {
   const { isPlaying, currentPlayingSong } = useSelector(
@@ -20,13 +21,13 @@ const DashboardLayout = () => {
       <div className="h-[76%] w-full">
         <Group className="gap-2">
           <Panel maxSize={"20%"} minSize={"15%"} className="bg-[#121212] p-5">
-            left
+            <Left />
           </Panel>
           <Panel className="bg-[#121212] p-5">
             <Outlet />
           </Panel>
           <Panel maxSize={"20%"} minSize={"15%"} className="bg-[#121212] p-5">
-            <Right/>
+            <Right />
           </Panel>
         </Group>
       </div>
