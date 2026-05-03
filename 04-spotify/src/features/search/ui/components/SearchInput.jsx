@@ -1,7 +1,7 @@
 import React from "react";
 import { useSearch } from "../../hooks/useSearch";
-import SearchContainer from "./searchContainer";
 import { Search } from "lucide-react";
+import SearchContainer from "./SearchContainer";
 
 const SearchInput = ({ ...props }) => {
   const { handleSearch, searchSong, isVisible, handleNavigate } = useSearch();
