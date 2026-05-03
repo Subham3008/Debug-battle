@@ -23,13 +23,20 @@ const playlistSlice = createSlice({
     addSongToPlaylist: (state, action) => {
       const { playlistId, song } = action.payload;
 
+      if (!song || !song.id) return;
+
       const playlist = state.playlists.find((p) => p.id === playlistId);
 
-      if (playlist) {
-        playlist.songs.push(song);
+      if (!playlist) return;
 
-        storage.set(STORAGE_KEY, state.playlists);
-      }
+      playlist.songs = playlist.songs.filter(Boolean);
+
+      const alreadyExists = playlist.songs.some((s) => s?.id === song.id);
+
+      if (alreadyExists) return;
+
+      playlist.songs.push(song);
+      storage.set(STORAGE_KEY, state.playlists);
     },
 
     removeSongFromPlaylist: (state, action) => {
@@ -43,10 +50,34 @@ const playlistSlice = createSlice({
         storage.set(STORAGE_KEY, state.playlists);
       }
     },
+
+    renamePlaylist: (state, action) => {
+      const { playlistId, newName } = action.payload;
+
+      const playlist = state.playlists.find((p) => p.id === playlistId);
+
+      if (playlist) {
+        playlist.name = newName;
+
+        storage.set("playlists", state.playlists);
+      }
+    },
+    deletePlaylist: (state, action) => {
+      const playlistId = action.payload;
+
+      state.playlists = state.playlists.filter((p) => p.id !== playlistId);
+
+      storage.set("playlists", state.playlists);
+    },
   },
 });
 
-export const { createPlaylist, addSongToPlaylist, removeSongFromPlaylist } =
-  playlistSlice.actions;
+export const {
+  createPlaylist,
+  addSongToPlaylist,
+  removeSongFromPlaylist,
+  renamePlaylist,
+  deletePlaylist,
+} = playlistSlice.actions;
 
 export default playlistSlice.reducer;

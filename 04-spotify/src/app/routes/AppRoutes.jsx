@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
 import ProtectedRoutes from "./ProtectedRoutes";
 import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../../features/auth/ui/pages/LoginPage";
@@ -10,6 +10,10 @@ import ArtistSongPage from "../../features/dashboard/ui/pages/ArtistSongPage";
 import Playlist from "../../features/dashboard/ui/components/Playlist";
 const AppRoutes = () => {
   const router = createBrowserRouter([
+    {
+      index: true,
+      element: <Navigate to="/dashboard" replace />,
+    },
     {
       path: "/",
       element: <ProtectedRoutes />,
@@ -47,7 +51,7 @@ const AppRoutes = () => {
           element: <ArtistSongPage />,
         },
         {
-          path: "playlist",
+          path: "playlist/:id",
           element: <Playlist />,
         },
       ],

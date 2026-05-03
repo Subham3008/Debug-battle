@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
-import { Play, Heart, MoreHorizontal, MoveLeft, Pause } from "lucide-react";
+import { Play, Heart, MoveLeft, Pause } from "lucide-react";
 import { useDashboard } from "../../hooks/useDashboard";
 import { pause, play, playNewSong } from "../../../player/state/musicSlice";
+import AddToPlaylist from "@/components/local/CommandManyItems";
 
 const SongDetails = () => {
   const { currentPlayingSong, navigate, isPlaying, dispatch, updatedSong } =
@@ -60,7 +61,7 @@ const SongDetails = () => {
                 </button>
               ) : (
                 <button
-                  onClick={() => dispatch(playNewSong(updatedSong))}
+                  onClick={() => dispatch(playNewSong(songData))} // ✅ FIXED
                   className="bg-green-500 hover:bg-green-400 text-black p-4 rounded-full"
                 >
                   <Play size={22} fill="black" />
@@ -73,10 +74,7 @@ const SongDetails = () => {
               </button>
 
               {/* More Options */}
-              <button className="text-gray-400 hover:text-white">
-                <MoreHorizontal size={22} />
-                {/* Add to playlist */}
-              </button>
+              <AddToPlaylist song={songData} />
             </div>
           </div>
         </div>

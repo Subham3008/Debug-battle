@@ -6,11 +6,12 @@ import PlaylistPage from "./PlaylistPage";
 import { CirclePlus } from "lucide-react";
 
 const Left = () => {
-  const { allArtists } = useDashboard();
+  const { allArtists, handleCreatePlaylist, playlists } = useDashboard();
   const [activeTab, setActiveTab] = useState("playlist");
   return (
     <div className="flex flex-col gap-2">
       <div
+        onClick={handleCreatePlaylist}
         className="flex items-center gap-1
                 bg-[#1db954] text-black 
                 px-3 py-2 rounded-full 
@@ -51,7 +52,7 @@ const Left = () => {
       {/* UI Content */}
       <div className="bg-[#cbcbcb1e] p-3 rounded-2xl">
         {activeTab === "playlist" ? (
-          <PlaylistPage />
+          <PlaylistPage playlists={playlists} />
         ) : (
           <Artist artists={allArtists} />
         )}

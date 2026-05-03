@@ -3,7 +3,7 @@ import { useDashboard } from "../../hooks/useDashboard";
 const Artist = ({ artists }) => {
   const { handleArtistNavigate } = useDashboard();
   return (
-    <div className="w-64 h-95 overflow-y-auto px-2">
+    <div className="h-95 overflow-y-auto px-2 overflow-x-hidden">
       <h2 className="text-white font-semibold text-lg mb-4">Artists</h2>
 
       <div className="flex flex-col gap-2">

@@ -11,7 +11,6 @@ const Playlist = () => {
 
   const { playlists } = useSelector((store) => store.playlist);
 
-  // ✅ SAFE FIX
   const safePlaylists = playlists || [];
 
   const playlist = safePlaylists.find((p) => p.id === Number(id));
@@ -25,13 +24,16 @@ const Playlist = () => {
     navigate(`/dashboard/details/${song.id}`);
   };
 
+  console.log("PLAYLIST:", playlist);
+  console.log("SONGS:", playlist.songs);
+
   return (
     <div className="text-white p-6">
       {/* Header */}
       <div className="flex items-end gap-6 mb-8">
         {/* Cover */}
         <div
-          className="w-48 h-48 bg-gradient-to-br from-purple-600 to-blue-500 
+          className="w-48 h-48 bg-linear-to-br from-purple-600 to-blue-500 
                         flex items-center justify-center text-4xl font-bold rounded-md"
         >
           {playlist.name?.charAt(0)}
@@ -70,49 +72,51 @@ const Playlist = () => {
 
       {/* Songs */}
       <div className="flex flex-col gap-2">
-        {(playlist.songs || []).map((song, index) => (
-          <div
-            key={song.id}
-            className="grid grid-cols-12 items-center p-2 rounded-md 
-                       hover:bg-[#2a2a2a] cursor-pointer"
-            onClick={() => handlePlaySong(song)}
-          >
-            <p className="col-span-1 text-gray-400">{index + 1}</p>
+        {(playlist.songs || [])
+          .filter((song) => song)
+          .map((song, index) => (
+            <div
+              key={song.id}
+              className="grid grid-cols-12 items-center p-2 rounded-md 
+                   hover:bg-[#2a2a2a] cursor-pointer"
+              onClick={() => handlePlaySong(song)}
+            >
+              <p className="col-span-1 text-gray-400">{index + 1}</p>
 
-            <div className="col-span-6 flex items-center gap-3">
-              <img
-                src={song.thumbnail}
-                alt={song.title}
-                className="w-10 h-10 rounded-md"
-              />
-              <div>
-                <p className="font-semibold">{song.title}</p>
-                <p className="text-sm text-gray-400">{song.artist}</p>
+              <div className="col-span-6 flex items-center gap-3">
+                <img
+                  src={song?.thumbnail}
+                  alt={song?.title}
+                  className="w-10 h-10 rounded-md"
+                />
+                <div>
+                  <p className="font-semibold">{song?.title}</p>
+                  <p className="text-sm text-gray-400">{song?.artist}</p>
+                </div>
+              </div>
+
+              <p className="col-span-3 text-gray-400">{song?.album}</p>
+
+              <div
+                className="col-span-2 text-right"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() =>
+                    dispatch(
+                      removeSongFromPlaylist({
+                        playlistId: playlist.id,
+                        songId: song.id,
+                      }),
+                    )
+                  }
+                  className="text-red-400 hover:text-red-600"
+                >
+                  Remove
+                </button>
               </div>
             </div>
-
-            <p className="col-span-3 text-gray-400">{song.album}</p>
-
-            <div
-              className="col-span-2 text-right"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() =>
-                  dispatch(
-                    removeSongFromPlaylist({
-                      playlistId: playlist.id,
-                      songId: song.id,
-                    }),
-                  )
-                }
-                className="text-red-400 hover:text-red-600"
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       {/* Empty state */}
