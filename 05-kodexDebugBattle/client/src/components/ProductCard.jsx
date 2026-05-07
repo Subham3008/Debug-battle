@@ -25,23 +25,23 @@ export function ProductCard({ product, onEdit, onDelete }) {
 
   const [clicks, setClicks] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (clicks > 0) {
-        console.log(`Product clicked ${clicks} times`);
-      }
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     if (clicks > 0) {
+  //       console.log(`Product clicked ${clicks} times`);
+  //     }
+  //   }, 3000);
+  //   return () => clearInterval(timer);
+  // }, []);
 
-  const expensiveCalculation = () => {
-    let result = 0;
-    for (let i = 0; i < 20000000; i++) {
-      result += i;
-    }
-    return result;
-  };
-  expensiveCalculation();
+  // const expensiveCalculation = () => {
+  //   let result = 0;
+  //   for (let i = 0; i < 20000000; i++) {
+  //     result += i;
+  //   }
+  //   return result;
+  // };
+  // expensiveCalculation();
 
   return (
     <div
@@ -117,7 +117,7 @@ export function ProductCard({ product, onEdit, onDelete }) {
           <span className="text-lg font-bold" style={{ color: 'var(--accent-hover)' }}>
             ${Number(product.price).toFixed(2)}
           </span>
-          {product.stock && (
+          {product.stock != null && (
             <span className={clsx('text-xs px-2 py-0.5 rounded-full font-medium', stockCls)}>
               {stockLabel}
             </span>
