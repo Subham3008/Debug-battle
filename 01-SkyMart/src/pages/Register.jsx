@@ -144,7 +144,6 @@ const Register = () => {
                 <p className="text-sm text-red-400">{errors.email.message}</p>
               )}
             </div>
-
             {/* Password */}
             <div className="relative">
               <svg
