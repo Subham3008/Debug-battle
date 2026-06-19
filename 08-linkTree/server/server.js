@@ -1,8 +1,20 @@
-import app from "./src/app.js"
+import createApp from "./src/app.js"
+import { connectDB } from "./src/config/db.js"
+import env from "./src/config/env.js"
+import logger from "./src/config/logger.js"
 
-const PORT = process.env.port || 5000
 
-app.listen("PORT", () => {
-  console.log(`Server is running on port ${PORT}`);
-})
+const app = createApp()
+
+function startServer() {
+  connectDB().then(async () => {
+    app.listen(env.PORT, () => {
+      logger.info({ port: env.PORT }, "Server is running on port");
+    })
+  }).catch((error) => {
+    logger.error({ error: error }, "Error while running server.");
+  })
+}
+
+startServer()
 
