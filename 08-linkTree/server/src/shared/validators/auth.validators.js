@@ -1,4 +1,4 @@
-import { body } from "express-validators"
+import { body } from "express-validator"
 
 export const registerValidation = [
   body('username')

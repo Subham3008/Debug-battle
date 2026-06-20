@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
-import User from "../models/user.model";
-import { generateToken } from "../shared/utils/token";
+import User from "../models/user.model.js";
+import { generateToken } from "../shared/utils/token.js";
 
 export const registerUser = async (req, res) => {
   try {
