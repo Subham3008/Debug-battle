@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { ExternalLink } from "lucide-react";
 import { useParams } from "react-router";
+import ThemeToggle from "../../../shared/theme/ThemeToggle";
 import { useHome } from "../hooks/useHome";
 
 const Home = () => {
@@ -30,21 +32,25 @@ const Home = () => {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-10 text-slate-100">
+    <main className="min-h-screen bg-[var(--surface)] px-4 py-6 text-[var(--text)]">
+      <div className="mx-auto flex max-w-5xl justify-end">
+        <ThemeToggle />
+      </div>
+
       <section className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-xl flex-col justify-center">
         <div className="mb-8 text-center">
-          <div className="mx-auto grid h-20 w-20 place-items-center rounded-full border border-cyan-300/40 bg-cyan-300/10 text-3xl font-semibold text-cyan-200">
+          <div className="mx-auto grid h-20 w-20 place-items-center rounded-full border border-[var(--border)] bg-[var(--panel)] text-3xl font-semibold text-[var(--accent)] shadow-[var(--shadow)]">
             {username?.charAt(0)?.toUpperCase()}
           </div>
-          <h1 className="mt-5 text-3xl font-semibold text-white">@{username}</h1>
+          <h1 className="mt-5 text-3xl font-semibold text-[var(--text)]">@{username}</h1>
         </div>
 
         {isLoading ? (
-          <p className="text-center text-slate-400">Loading links...</p>
+          <p className="text-center text-[var(--muted)]">Loading links...</p>
         ) : null}
 
         {error ? (
-          <p className="rounded-md border border-red-400/30 bg-red-500/10 px-4 py-3 text-center text-sm text-red-100">
+          <p className="rounded-md border border-[var(--danger-border)] bg-[var(--danger-bg)] px-4 py-3 text-center text-sm text-[var(--danger-text)]">
             {error}
           </p>
         ) : null}
@@ -59,13 +65,14 @@ const Home = () => {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleLinkClick(link._id)}
-                  className="block rounded-lg border border-white/10 bg-white/[0.04] px-5 py-4 text-center font-medium text-white transition hover:border-cyan-300 hover:bg-cyan-300/10 hover:text-cyan-100"
+                  className="flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--panel)] px-5 py-4 text-center font-medium text-[var(--text)] shadow-sm transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:bg-[var(--panel-strong)]"
                 >
-                  {link.title}
+                  <span>{link.title}</span>
+                  <ExternalLink size={16} className="text-[var(--muted)]" />
                 </a>
               ))
             ) : (
-              <p className="text-center text-slate-400">No links available.</p>
+              <p className="text-center text-[var(--muted)]">No links available.</p>
             )}
           </div>
         ) : null}

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { LockKeyhole, Mail, User, UserPlus } from "lucide-react";
 import { Link, useNavigate } from "react-router";
+import ThemeToggle from "../../../shared/theme/ThemeToggle";
 import { registerUser } from "../services/auth.api";
 import { saveAuthUser } from "../utils/authStorage";
 
@@ -38,53 +40,66 @@ const Register = () => {
   };
 
   return (
-    <main className="grid min-h-screen place-items-center bg-slate-950 px-4 py-10 text-slate-100">
-      <section className="w-full max-w-md rounded-lg border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-cyan-950/30">
+    <main className="min-h-screen bg-[var(--surface)] px-4 py-6 text-[var(--text)]">
+      <div className="mx-auto flex max-w-5xl justify-end">
+        <ThemeToggle />
+      </div>
+
+      <section className="mx-auto mt-12 w-full max-w-md rounded-lg border border-[var(--border)] bg-[var(--panel)] p-7 shadow-[var(--shadow)]">
         <div className="mb-8">
-          <p className="text-sm uppercase tracking-wider text-cyan-300">Start your page</p>
-          <h1 className="mt-2 text-3xl font-semibold text-white">Create account</h1>
+          <p className="text-sm font-medium text-[var(--accent)]">Start your page</p>
+          <h1 className="mt-2 text-3xl font-semibold text-[var(--text)]">Create account</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <label className="block">
-            <span className="text-sm font-medium text-slate-300">Username</span>
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--muted)]">
+              <User size={16} />
+              Username
+            </span>
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className="mt-2 w-full rounded-md border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+              className="mt-2 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
               required
             />
           </label>
 
           <label className="block">
-            <span className="text-sm font-medium text-slate-300">Email</span>
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--muted)]">
+              <Mail size={16} />
+              Email
+            </span>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-2 w-full rounded-md border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+              className="mt-2 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
               required
             />
           </label>
 
           <label className="block">
-            <span className="text-sm font-medium text-slate-300">Password</span>
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--muted)]">
+              <LockKeyhole size={16} />
+              Password
+            </span>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-2 w-full rounded-md border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+              className="mt-2 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
               minLength={6}
               required
             />
           </label>
 
           {error ? (
-            <p className="rounded-md border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+            <p className="rounded-md border border-[var(--danger-border)] bg-[var(--danger-bg)] px-4 py-3 text-sm text-[var(--danger-text)]">
               {error}
             </p>
           ) : null}
@@ -92,15 +107,16 @@ const Register = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-md bg-cyan-300 px-4 py-3 font-semibold text-slate-950 hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-70"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-4 py-3 font-semibold text-white transition hover:bg-[var(--accent-strong)] disabled:cursor-not-allowed disabled:opacity-70"
           >
+            <UserPlus size={18} />
             {isSubmitting ? "Creating account..." : "Register"}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="mt-6 text-center text-sm text-[var(--muted)]">
           Already have an account?{" "}
-          <Link to="/login" className="font-medium text-cyan-300 hover:text-cyan-200">
+          <Link to="/login" className="font-medium text-[var(--accent)] hover:text-[var(--accent-strong)]">
             Login
           </Link>
         </p>

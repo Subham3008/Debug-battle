@@ -1,6 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Activity,
+  BarChart3,
+  ExternalLink,
+  Eye,
+  Link as LinkIcon,
+  LogOut,
+  MousePointerClick,
+  Plus,
+  Trophy,
+  TrendingUp,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { getAuthUser, clearAuthUser } from "../../auth/utils/authStorage";
+import ThemeToggle from "../../../shared/theme/ThemeToggle";
 import { createLink, getAnalytics } from "../services/analytics.api";
 
 const Analytics = () => {
@@ -86,7 +99,7 @@ const Analytics = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-slate-950 px-4 py-8 text-white">
+      <main className="min-h-screen bg-[var(--surface)] px-4 py-8 text-[var(--text)]">
         <div className="mx-auto max-w-6xl">Loading analytics...</div>
       </main>
     );
@@ -94,8 +107,8 @@ const Analytics = () => {
 
   if (error) {
     return (
-      <main className="min-h-screen bg-slate-950 px-4 py-8 text-white">
-        <div className="mx-auto max-w-3xl rounded-lg border border-red-400/30 bg-red-500/10 p-6 text-red-100">
+      <main className="min-h-screen bg-[var(--surface)] px-4 py-8 text-[var(--text)]">
+        <div className="mx-auto max-w-3xl rounded-lg border border-[var(--danger-border)] bg-[var(--danger-bg)] p-6 text-[var(--danger-text)]">
           {error}
         </div>
       </main>
@@ -105,81 +118,105 @@ const Analytics = () => {
   const { summary, lastSevenDays, links } = analytics;
 
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-8 text-slate-100">
+    <main className="min-h-screen bg-[var(--surface)] px-4 py-8 text-[var(--text)]">
       <div className="mx-auto max-w-6xl space-y-8">
-        <header className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <header className="flex flex-col gap-4 border-b border-[var(--border)] pb-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm uppercase tracking-wider text-cyan-300">Analytics Dashboard</p>
-            <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">
+            <p className="text-sm font-medium text-[var(--accent)]">Analytics Dashboard</p>
+            <h1 className="mt-2 text-3xl font-semibold text-[var(--text)] sm:text-4xl">
               @{authUser.username}
             </h1>
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <ThemeToggle />
             <Link
               to={`/${authUser.username}`}
-              className="rounded-md border border-white/15 px-4 py-2 text-sm font-medium text-white hover:border-cyan-300 hover:text-cyan-200"
+              className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--panel)] px-4 py-2 text-sm font-medium text-[var(--text)] transition hover:border-[var(--accent)]"
             >
+              <Eye size={16} />
               View public page
             </Link>
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-100"
+              className="inline-flex items-center gap-2 rounded-md bg-[var(--text)] px-4 py-2 text-sm font-semibold text-[var(--surface)] transition hover:opacity-85"
             >
+              <LogOut size={16} />
               Logout
             </button>
           </div>
         </header>
 
         <section className="grid gap-4 md:grid-cols-4">
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-            <p className="text-sm text-slate-400">Total Links</p>
-            <strong className="mt-3 block text-3xl text-white">{summary.totalLinks}</strong>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-5 shadow-sm">
+            <p className="inline-flex items-center gap-2 text-sm text-[var(--muted)]">
+              <LinkIcon size={16} />
+              Total Links
+            </p>
+            <strong className="mt-3 block text-3xl text-[var(--text)]">{summary.totalLinks}</strong>
           </div>
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-            <p className="text-sm text-slate-400">Total Clicks</p>
-            <strong className="mt-3 block text-3xl text-white">{summary.totalClicks}</strong>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-5 shadow-sm">
+            <p className="inline-flex items-center gap-2 text-sm text-[var(--muted)]">
+              <MousePointerClick size={16} />
+              Total Clicks
+            </p>
+            <strong className="mt-3 block text-3xl text-[var(--text)]">{summary.totalClicks}</strong>
           </div>
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-            <p className="text-sm text-slate-400">Avg. Clicks</p>
-            <strong className="mt-3 block text-3xl text-white">{summary.averageClicks}</strong>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-5 shadow-sm">
+            <p className="inline-flex items-center gap-2 text-sm text-[var(--muted)]">
+              <TrendingUp size={16} />
+              Avg. Clicks
+            </p>
+            <strong className="mt-3 block text-3xl text-[var(--text)]">{summary.averageClicks}</strong>
           </div>
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
-            <p className="text-sm text-slate-400">Top Link</p>
-            <strong className="mt-3 block truncate text-lg text-white">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-5 shadow-sm">
+            <p className="inline-flex items-center gap-2 text-sm text-[var(--muted)]">
+              <Trophy size={16} />
+              Top Link
+            </p>
+            <strong className="mt-3 block truncate text-lg text-[var(--text)]">
               {summary.topLink?.title || "No clicks yet"}
             </strong>
           </div>
         </section>
 
-        <section className="rounded-lg border border-white/10 bg-white/[0.04] p-6">
+        <section className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-6 shadow-sm">
           <div className="mb-5">
-            <h2 className="text-xl font-semibold text-white">Add New Link</h2>
+            <h2 className="inline-flex items-center gap-2 text-xl font-semibold text-[var(--text)]">
+              <Plus size={20} />
+              Add New Link
+            </h2>
           </div>
 
           <form onSubmit={handleCreateLink} className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr_auto] lg:items-end">
             <label className="block">
-              <span className="text-sm font-medium text-slate-300">Title</span>
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--muted)]">
+                <LinkIcon size={16} />
+                Title
+              </span>
               <input
                 type="text"
                 name="title"
                 value={linkForm.title}
                 onChange={handleLinkFormChange}
-                className="mt-2 w-full rounded-md border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+                className="mt-2 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
                 placeholder="Portfolio"
                 required
               />
             </label>
 
             <label className="block">
-              <span className="text-sm font-medium text-slate-300">URL</span>
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--muted)]">
+                <ExternalLink size={16} />
+                URL
+              </span>
               <input
                 type="url"
                 name="url"
                 value={linkForm.url}
                 onChange={handleLinkFormChange}
-                className="mt-2 w-full rounded-md border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-300"
+                className="mt-2 w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
                 placeholder="https://example.com"
                 required
               />
@@ -188,24 +225,28 @@ const Analytics = () => {
             <button
               type="submit"
               disabled={isCreatingLink}
-              className="rounded-md bg-cyan-300 px-5 py-3 font-semibold text-slate-950 hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-5 py-3 font-semibold text-white transition hover:bg-[var(--accent-strong)] disabled:cursor-not-allowed disabled:opacity-70"
             >
+              <Plus size={18} />
               {isCreatingLink ? "Adding..." : "Add Link"}
             </button>
           </form>
 
           {formError ? (
-            <p className="mt-4 rounded-md border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+            <p className="mt-4 rounded-md border border-[var(--danger-border)] bg-[var(--danger-bg)] px-4 py-3 text-sm text-[var(--danger-text)]">
               {formError}
             </p>
           ) : null}
         </section>
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-6">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-6 shadow-sm">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-white">Last 7 Days Activity</h2>
-              <span className="text-sm text-slate-400">Clicks per day</span>
+              <h2 className="inline-flex items-center gap-2 text-xl font-semibold text-[var(--text)]">
+                <Activity size={20} />
+                Last 7 Days Activity
+              </h2>
+              <span className="text-sm text-[var(--muted)]">Clicks per day</span>
             </div>
 
             <div className="flex h-72 items-end gap-3">
@@ -214,16 +255,16 @@ const Analytics = () => {
 
                 return (
                   <div key={day.date} className="flex h-full flex-1 flex-col items-center justify-end gap-3">
-                    <div className="flex h-full w-full items-end rounded-md bg-slate-900/70 p-1">
+                    <div className="flex h-full w-full items-end rounded-md bg-[var(--panel-strong)] p-1">
                       <div
-                        className="w-full rounded bg-cyan-400"
+                        className="w-full rounded bg-[var(--accent)]"
                         style={{ height }}
                         title={`${day.clicks} clicks`}
                       />
                     </div>
                     <div className="text-center">
-                      <p className="text-sm font-semibold text-white">{day.clicks}</p>
-                      <p className="text-xs text-slate-400">{day.date.slice(5)}</p>
+                      <p className="text-sm font-semibold text-[var(--text)]">{day.clicks}</p>
+                      <p className="text-xs text-[var(--muted)]">{day.date.slice(5)}</p>
                     </div>
                   </div>
                 );
@@ -231,8 +272,11 @@ const Analytics = () => {
             </div>
           </div>
 
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-6">
-            <h2 className="text-xl font-semibold text-white">Link Performance</h2>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--panel)] p-6 shadow-sm">
+            <h2 className="inline-flex items-center gap-2 text-xl font-semibold text-[var(--text)]">
+              <BarChart3 size={20} />
+              Link Performance
+            </h2>
             <div className="mt-5 space-y-4">
               {links.length ? (
                 links.map((link) => {
@@ -241,19 +285,20 @@ const Analytics = () => {
                   return (
                     <div key={link.id}>
                       <div className="mb-2 flex items-center justify-between gap-3">
-                        <a href={link.url} target="_blank" rel="noreferrer" className="truncate text-sm font-medium text-white">
+                        <a href={link.url} target="_blank" rel="noreferrer" className="inline-flex min-w-0 items-center gap-2 truncate text-sm font-medium text-[var(--text)]">
+                          <ExternalLink size={14} className="shrink-0 text-[var(--muted)]" />
                           {link.title}
                         </a>
-                        <span className="text-sm text-slate-400">{link.clicks} clicks</span>
+                        <span className="text-sm text-[var(--muted)]">{link.clicks} clicks</span>
                       </div>
-                      <div className="h-2 rounded-full bg-slate-800">
-                        <div className="h-2 rounded-full bg-emerald-400" style={{ width }} />
+                      <div className="h-2 rounded-full bg-[var(--panel-strong)]">
+                        <div className="h-2 rounded-full bg-[var(--accent)]" style={{ width }} />
                       </div>
                     </div>
                   );
                 })
               ) : (
-                <p className="text-slate-400">No links created yet.</p>
+                <p className="text-[var(--muted)]">No links created yet.</p>
               )}
             </div>
           </div>
