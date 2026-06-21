@@ -96,6 +96,36 @@ export const incrementLinkClick = async (req, res) => {
   });
 }
 
+export const deleteLink = async (req, res) => {
+  const { linkId } = req.params
+
+  try {
+    const link = await linkModel.findById(linkId)
+
+    if (!link) {
+      return res.status(404).json({
+        message: "Link not found",
+      })
+    }
+
+    if (link.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "You are not allowed to delete this link",
+      })
+    }
+
+    await link.deleteOne()
+
+    return res.status(200).json({
+      message: "Link deleted successfully",
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Failed to delete link",
+    })
+  }
+}
+
 export const getAnalyticsByUsername = async (req, res) => {
   const { username } = req.params
 

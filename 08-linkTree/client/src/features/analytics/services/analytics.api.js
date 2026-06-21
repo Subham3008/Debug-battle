@@ -14,3 +14,8 @@ export const createLink = async ({ title, url }) => {
   const response = await analyticsApi.post("/", { title, url });
   return response.data;
 };
+
+export const deleteLink = async ({ linkId }) => {
+  const response = await analyticsApi.delete(`/${linkId}`);
+  return response.data;
+};

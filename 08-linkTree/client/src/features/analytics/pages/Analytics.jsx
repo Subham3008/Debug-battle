@@ -8,13 +8,14 @@ import {
   LogOut,
   MousePointerClick,
   Plus,
+  Trash2,
   Trophy,
   TrendingUp,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { getAuthUser, clearAuthUser } from "../../auth/utils/authStorage";
 import ThemeToggle from "../../../shared/theme/ThemeToggle";
-import { createLink, getAnalytics } from "../services/analytics.api";
+import { createLink, deleteLink, getAnalytics } from "../services/analytics.api";
 
 const Analytics = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Analytics = () => {
   });
   const [formError, setFormError] = useState("");
   const [isCreatingLink, setIsCreatingLink] = useState(false);
+  const [deletingLinkId, setDeletingLinkId] = useState("");
 
   const loadAnalytics = useCallback(() => {
     if (!authUser?.username) {
@@ -94,6 +96,20 @@ const Analytics = () => {
       setFormError(apiError.response?.data?.message || "Unable to create link");
     } finally {
       setIsCreatingLink(false);
+    }
+  };
+
+  const handleDeleteLink = async (linkId) => {
+    setDeletingLinkId(linkId);
+    setFormError("");
+
+    try {
+      await deleteLink({ linkId });
+      await loadAnalytics();
+    } catch (apiError) {
+      setFormError(apiError.response?.data?.message || "Unable to delete link");
+    } finally {
+      setDeletingLinkId("");
     }
   };
 
@@ -289,7 +305,19 @@ const Analytics = () => {
                           <ExternalLink size={14} className="shrink-0 text-[var(--muted)]" />
                           {link.title}
                         </a>
-                        <span className="text-sm text-[var(--muted)]">{link.clicks} clicks</span>
+                        <div className="flex shrink-0 items-center gap-2">
+                          <span className="text-sm text-[var(--muted)]">{link.clicks} clicks</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteLink(link.id)}
+                            disabled={deletingLinkId === link.id}
+                            className="grid h-8 w-8 place-items-center rounded-md border border-[var(--border)] text-[var(--muted)] transition hover:border-[var(--danger-border)] hover:bg-[var(--danger-bg)] hover:text-[var(--danger-text)] disabled:cursor-not-allowed disabled:opacity-60"
+                            aria-label={`Delete ${link.title}`}
+                            title="Delete link"
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
                       </div>
                       <div className="h-2 rounded-full bg-[var(--panel-strong)]">
                         <div className="h-2 rounded-full bg-[var(--accent)]" style={{ width }} />
