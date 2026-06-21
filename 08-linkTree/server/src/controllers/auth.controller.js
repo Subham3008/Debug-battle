@@ -32,7 +32,7 @@ export const registerUser = async (req, res) => {
         email: user.email,
       }
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       message: error.message || 'Failed to register user',
     });
