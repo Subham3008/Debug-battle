@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { getLinks } from "../services/home.api.js";
+import { getLinks, incrementLinkClick } from "../services/home.api.js";
 
 export const useHome = () => {
   const fetchLinks = useCallback(async ({ username }) => {
@@ -12,7 +12,17 @@ export const useHome = () => {
     }
   }, [])
 
+  const trackLinkClick = useCallback(async ({ linkId }) => {
+    try {
+      return await incrementLinkClick({ linkId })
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }, [])
+
   return {
-    fetchLinks
+    fetchLinks,
+    trackLinkClick
   }
 }

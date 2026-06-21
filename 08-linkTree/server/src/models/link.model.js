@@ -17,7 +17,19 @@ const linkSchema = new mongoose.Schema({
   clicks: {
     type: Number,
     default: 0,
-  }
+  },
+  clickHistory: [
+    {
+      date: {
+        type: String,
+        required: true,
+      },
+      clicks: {
+        type: Number,
+        default: 0,
+      },
+    },
+  ],
 }, { timestamps: true });
 
 const Link = mongoose.model('Link', linkSchema);
