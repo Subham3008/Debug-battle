@@ -8,8 +8,12 @@ export default function createApp() {
 
   app.use(express.json())
   app.use(cookieParser())
-
+  app.use(express.static('dist'))
   app.use('/api', apiRoutes)
+
+  app.get("/*name", (req, res) => {
+    res.sendFile('dist/index.html', { root: process.cwd() })
+  })
 
   return app
 }
